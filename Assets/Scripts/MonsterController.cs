@@ -11,12 +11,18 @@ public class MonsterController : MonoBehaviour
     public float stopDistance = 1.5f;
 
     private NavMeshAgent agent;
+    private CharacterController characterController;
+
     private bool isChasing = false;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        characterController = GetComponent<CharacterController>();
+
+        agent.updatePosition = false;
+        agent.updateRotation = false;
     }
 
     void Update()
@@ -32,6 +38,10 @@ public class MonsterController : MonoBehaviour
             animator.SetBool("isWalking", true);
 
             Vector3 direction = (player.position - transform.position).normalized;
+            Vector3 velocity = direction * agent.speed;
+
+            characterController.Move(velocity * Time.deltaTime);
+
             if (direction.magnitude > 0.1f)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
