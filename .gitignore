@@ -1,0 +1,88 @@
+# =============== #
+# Unity generated #
+# =============== #
+
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+Assets/AssetStoreTools*
+
+# ============== #
+# OS generated   #
+# ============== #
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =============== #
+# IDE generated   #
+# =============== #
+
+# VS
+.vs/
+*.sln
+*.csproj
+*.user
+*.unityproj
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# ============== #
+# Crash logs     #
+# ============== #
+
+*.stacktrace
+*.pidb
+*.mdb
+
+# =============== #
+# Unity Cache     #
+# =============== #
+
+*.bak
+*.old
+*.tmp
+
+# =============== #
+# Build results   #
+# =============== #
+
+*.apk
+*.aab
+*.xcodeproj/
+*.xcworkspace/
+*.xcuserstate
+*.xcuserdata/
+
+*.exe
+*.app
+*.ipa
+
+# ================ #
+# Unity Collaborate#
+# ================ #
+
+.collabignore
+
+# ================ #
+# Git LFS          #
+# ================ #
+# Uncomment if you use Git LFS
+*.psd
+*.mp4
+*.fbx
+*.unitypackage
+*.png
+*.wav
