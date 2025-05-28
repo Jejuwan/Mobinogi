@@ -17,11 +17,6 @@ public class MonsterMoveState : State
     public override void Tick(float deltaTime)
     {
         monster.Move();
-
-        if (!monster.IsMoving)
-        {
-            stateMachine.SetState(monster.IdleState);
-        }
     }
     public override void Exit()
     {

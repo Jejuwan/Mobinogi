@@ -9,7 +9,7 @@ public class PlayerIdleState : State
 
     public override void Enter()
     {
-
+        player.SetAnimBool("isWalking", false);
     }
 
     public override void Tick(float deltaTime)

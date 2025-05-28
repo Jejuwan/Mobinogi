@@ -25,6 +25,5 @@ public class PlayerMoveState : State
     }
     public override void Exit()
     {
-        player.SetAnimBool("isWalking", false);
     }
 }

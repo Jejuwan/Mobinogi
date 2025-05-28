@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -5,11 +6,11 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(NavMeshAgent))]
 public class MonsterController : ChrController
 {
-    [SerializeField]public Transform player;
+    [SerializeField]public GameObject player;
 
     public float chaseRange = 10f;    
     public float stopDistance = 1.5f;
-    public bool IsMoving { get; set; }
+    public bool nearPlayer { get; set; }
 
     private NavMeshAgent agent;
 
@@ -24,11 +25,14 @@ public class MonsterController : ChrController
 
         IdleState = new MonsterIdleState(this, stateMachine);
         MoveState = new MonsterMoveState(this, stateMachine);
+        AttackState = new MonsterAttackState(this, stateMachine);
 
-        stateMachine.AddTransition(IdleState, MoveState, () => IsMoving);
-        stateMachine.AddTransition(MoveState, IdleState, () => !IsMoving);
+        stateMachine.AddTransition(IdleState, MoveState, () => !nearPlayer);
+        stateMachine.AddTransition(MoveState, AttackState, () => nearPlayer);
 
         stateMachine.SetState(IdleState);
+
+        MonsterPool.Instance.pool.Enqueue(this.gameObject);
     }
 
     protected override void Update()
@@ -42,15 +46,15 @@ public class MonsterController : ChrController
     {
         if (player == null) return;
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
 
         if (distance <= chaseRange && distance > stopDistance)
         {
-            IsMoving = true;
+            nearPlayer = false;
         }
         else if (distance <= stopDistance)
         {
-            IsMoving = false;
+            nearPlayer = true;
         }
     }
 
@@ -58,26 +62,23 @@ public class MonsterController : ChrController
     {
         if (player == null) return;
 
-        agent.SetDestination(player.position);
+        agent.SetDestination(player.transform.position);
 
-        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 direction = (player.transform.position - transform.position).normalized;
         Vector3 velocity = direction * agent.speed;
 
         characterController.Move(velocity * Time.deltaTime);
 
-        if (direction.magnitude > 0.1f)
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                lookRotation,
-                10f * Time.deltaTime
-            );
-        }
+        LookController(player.transform, 10f);
     }
 
     public void Stop()
     {
         agent.ResetPath();
+    }
+
+    public void OnAttackEnd()
+    {
+        stateMachine.SetState(MoveState);
     }
 }

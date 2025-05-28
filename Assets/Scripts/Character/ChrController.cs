@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class ChrController : MonoBehaviour
 {
-    protected Animator animator;
+    public Animator animator;
     protected CharacterController characterController;
 
     protected StateMachine stateMachine;
 
     public State IdleState { get; set; }
     public State MoveState { get; set; }
+    public State AttackState { get; set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
@@ -28,4 +29,25 @@ public class ChrController : MonoBehaviour
     {
         animator.SetBool(name, value);
     }
+
+    public void SetAnimTrigger(string name)
+    {
+        animator.SetTrigger(name);
+    }
+
+    public void LookController(Transform target, float speed)
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+
+        if (direction.magnitude > 0.1f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                lookRotation,
+                speed * Time.deltaTime
+            );
+        }
+    }
 }
+
