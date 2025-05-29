@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ChrController : MonoBehaviour
 {
+    [SerializeField] public GameObject Weapon;
+
     public Animator animator;
     protected CharacterController characterController;
 
@@ -10,13 +12,19 @@ public class ChrController : MonoBehaviour
     public State IdleState { get; set; }
     public State MoveState { get; set; }
     public State AttackState { get; set; }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected virtual void Start()
+    public State ImpactState { get; set; }
+
+    protected virtual void Awake()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
         stateMachine = new StateMachine();
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    protected virtual void Start()
+    {
     }
 
     // Update is called once per frame
@@ -48,6 +56,17 @@ public class ChrController : MonoBehaviour
                 speed * Time.deltaTime
             );
         }
+    }
+
+    public void SetState(State state)
+    {
+        stateMachine.SetState(state);
+    }
+
+    public void OnEnableCollider(int val)
+    {
+        bool enabled = val != 0 ? true : false;
+        Weapon.GetComponent<Collider>().enabled = enabled;
     }
 }
 

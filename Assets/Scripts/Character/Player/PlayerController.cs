@@ -4,15 +4,16 @@ public class PlayerController : ChrController
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] public PlayerInputHandler Input;
-
     public GameObject TargetMonster { get; set; }
-    protected override void Start()
+
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         IdleState = new PlayerIdleState(this, stateMachine);
         MoveState = new PlayerMoveState(this, stateMachine);
         AttackState = new PlayerAttackState(this, stateMachine);
+        ImpactState = new PlayerImpactState(this, stateMachine);
 
         stateMachine.AddTransition(IdleState, MoveState, () => Input.IsMoving);
         stateMachine.AddTransition(MoveState, IdleState, () => !Input.IsMoving);
@@ -22,12 +23,17 @@ public class PlayerController : ChrController
             return (Vector3.Distance(transform.position, closeMonster.transform.position) < 1.5f);
         });
 
-       stateMachine.SetState(IdleState);
+        stateMachine.SetState(IdleState);
+    }
+    protected override void Start()
+    {
+        base.Start();
     }
 
     protected override void Update()
     {
         base.Update();
+
     }
 
     public GameObject GetClosestMonster()
@@ -62,7 +68,7 @@ public class PlayerController : ChrController
         }
     }
 
-    public void OnAttackEnd()
+    public void SetIdleState()
     {
         stateMachine.SetState(IdleState);
     }

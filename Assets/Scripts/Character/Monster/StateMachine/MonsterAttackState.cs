@@ -16,7 +16,7 @@ public class MonsterAttackState : State
 
     public override void Tick(float deltaTime)
     {
-
+        monster.LookController(monster.player.transform, 10f);
     }
     public override void Exit()
     {

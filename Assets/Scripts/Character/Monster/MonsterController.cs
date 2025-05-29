@@ -14,10 +14,10 @@ public class MonsterController : ChrController
 
     private NavMeshAgent agent;
 
-
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
+
         agent = GetComponent<NavMeshAgent>();
 
         agent.updatePosition = false;
@@ -26,11 +26,17 @@ public class MonsterController : ChrController
         IdleState = new MonsterIdleState(this, stateMachine);
         MoveState = new MonsterMoveState(this, stateMachine);
         AttackState = new MonsterAttackState(this, stateMachine);
+        ImpactState = new MonsterImpactState(this, stateMachine);
 
         stateMachine.AddTransition(IdleState, MoveState, () => !nearPlayer);
         stateMachine.AddTransition(MoveState, AttackState, () => nearPlayer);
 
         stateMachine.SetState(IdleState);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
 
         MonsterPool.Instance.pool.Enqueue(this.gameObject);
     }
@@ -77,7 +83,7 @@ public class MonsterController : ChrController
         agent.ResetPath();
     }
 
-    public void OnAttackEnd()
+    public void OnSetMoveState()
     {
         stateMachine.SetState(MoveState);
     }
