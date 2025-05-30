@@ -27,6 +27,7 @@ public class MonsterController : ChrController
         MoveState = new MonsterMoveState(this, stateMachine);
         AttackState = new MonsterAttackState(this, stateMachine);
         ImpactState = new MonsterImpactState(this, stateMachine);
+        DeathState = new MonsterDeathState(this, stateMachine);
 
         stateMachine.AddTransition(IdleState, MoveState, () => !nearPlayer);
         stateMachine.AddTransition(MoveState, AttackState, () => nearPlayer);
@@ -86,5 +87,10 @@ public class MonsterController : ChrController
     public void OnSetMoveState()
     {
         stateMachine.SetState(MoveState);
+    }
+
+    public void OnDeath()
+    {
+        Destroy(this.gameObject);
     }
 }

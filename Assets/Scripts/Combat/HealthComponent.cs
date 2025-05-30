@@ -18,14 +18,14 @@ public class HealthComponent : MonoBehaviour
 
         public void TakeDamage(int damage)
     {
+        currentHealth = Mathf.Max(currentHealth - damage, 0);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        IsDead = currentHealth <= 0;
+
         if (IsDead)
         {
             OnDeath?.Invoke();
-            return;
         }
-        
-        currentHealth = Mathf.Max(currentHealth - damage, 0);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     public void Heal(int amount)

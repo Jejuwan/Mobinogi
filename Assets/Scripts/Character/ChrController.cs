@@ -13,6 +13,7 @@ public class ChrController : MonoBehaviour
     public State MoveState { get; set; }
     public State AttackState { get; set; }
     public State ImpactState { get; set; }
+    public State DeathState { get; set; }
 
     protected virtual void Awake()
     {

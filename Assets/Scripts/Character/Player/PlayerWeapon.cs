@@ -23,7 +23,8 @@ public class PlayerWeapon : MonoBehaviour
             MonsterController monster = other.GetComponent<MonsterController>();
             if (monster != null)
             {
-                monster.SetState(monster.ImpactState);
+               if(!monster.healthComponent.IsDead)
+                   monster.SetState(monster.ImpactState);
             }
         }
     }

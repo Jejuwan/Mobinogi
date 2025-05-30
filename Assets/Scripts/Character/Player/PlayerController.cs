@@ -20,7 +20,12 @@ public class PlayerController : ChrController
         stateMachine.AddTransition(IdleState, AttackState, () =>
         {
             var closeMonster = GetClosestMonster();
-            return (Vector3.Distance(transform.position, closeMonster.transform.position) < 1.5f);
+            if (closeMonster == null) return false;
+
+            var chr = closeMonster.GetComponent<ChrController>();
+            if (chr == null || chr.healthComponent.IsDead) return false;
+
+            return Vector3.Distance(transform.position, closeMonster.transform.position) < 1.5f;
         });
 
         stateMachine.SetState(IdleState);
@@ -43,6 +48,8 @@ public class PlayerController : ChrController
 
         foreach (GameObject monster in MonsterPool.Instance.pool)
         {
+            if (monster == null)
+                continue;
             float distance = Vector3.Distance(transform.position, monster.transform.position);
             if (distance < minDistance)
             {

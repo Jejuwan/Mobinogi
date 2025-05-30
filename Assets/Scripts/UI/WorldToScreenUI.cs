@@ -1,4 +1,7 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class WorldToScreenUI : MonoBehaviour
 {
@@ -7,10 +10,24 @@ public class WorldToScreenUI : MonoBehaviour
     [SerializeField] private RectTransform uiElement;  // 체력바 UI 오브젝트
     [SerializeField] private Camera mainCamera;
 
-    void LateUpdate()
+    void OnEnable()
     {
-        Vector3 worldPos = target.position + offset;
-        Vector3 screenPos = mainCamera.WorldToScreenPoint(worldPos);
-        uiElement.position = screenPos;
+        StartCoroutine(FollowTarget());
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines(); // 혹은 해당 코루틴만 중단
+    }
+
+    IEnumerator FollowTarget()
+    {
+        while (true)
+        {
+            yield return new WaitForEndOfFrame(); // 카메라 움직임 끝난 후 실행
+
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(target.position + offset);
+            uiElement.position = screenPos;
+        }
     }
 }

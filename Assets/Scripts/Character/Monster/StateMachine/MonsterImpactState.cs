@@ -11,8 +11,16 @@ public class MonsterImpactState : State
 
     public override void Enter()
     {
-        monster.SetAnimTrigger("Impact");
-        monster.healthComponent.TakeDamage(10);
+       
+        monster.healthComponent.TakeDamage(30);
+        if(monster.healthComponent.IsDead)
+        {
+            monster.SetState(monster.DeathState);
+        }
+        else
+        {
+            monster.SetAnimTrigger("Impact");
+        }
     }
 
     public override void Tick(float deltaTime)
