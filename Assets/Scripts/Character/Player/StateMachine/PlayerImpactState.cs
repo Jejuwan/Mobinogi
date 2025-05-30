@@ -12,6 +12,7 @@ public class PlayerImpactState : State
     public override void Enter()
     {
         player.SetAnimTrigger("Impact");
+        player.healthComponent.TakeDamage(10);
     }
 
     public override void Tick(float deltaTime)

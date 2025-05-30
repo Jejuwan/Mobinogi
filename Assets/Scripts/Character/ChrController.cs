@@ -8,7 +8,7 @@ public class ChrController : MonoBehaviour
     protected CharacterController characterController;
 
     protected StateMachine stateMachine;
-
+    public HealthComponent healthComponent;
     public State IdleState { get; set; }
     public State MoveState { get; set; }
     public State AttackState { get; set; }
@@ -18,6 +18,7 @@ public class ChrController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        healthComponent = GetComponent<HealthComponent>(); 
 
         stateMachine = new StateMachine();
     }
