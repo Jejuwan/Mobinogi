@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2639860274284872459}
   - component: {fileID: 1475588749455053213}
   - component: {fileID: 8975945720462934417}
-  - component: {fileID: 4115266634521717684}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Monster
@@ -73,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterController
   Weapon: {fileID: 0}
   animator: {fileID: 0}
+  healthComponent: {fileID: 0}
   player: {fileID: 0}
   chaseRange: 10
   stopDistance: 1.5
@@ -122,29 +122,6 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!136 &4115266634521717684
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5161508310302999513}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 1.8
-  m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6277540983774049418
 GameObject:

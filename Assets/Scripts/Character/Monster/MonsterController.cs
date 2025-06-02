@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,13 +7,16 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(NavMeshAgent))]
 public class MonsterController : ChrController
 {
+    [SerializeField] private DamagePopupPool popupPool;
     [SerializeField]public GameObject player;
+    [SerializeField] private float dissolveDuration = 2f;
 
     public float chaseRange = 10f;    
     public float stopDistance = 1.5f;
     public bool nearPlayer { get; set; }
 
     private NavMeshAgent agent;
+    private Material material;
 
     protected override void Awake()
     {
@@ -22,6 +26,8 @@ public class MonsterController : ChrController
 
         agent.updatePosition = false;
         agent.updateRotation = false;
+
+        material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
         IdleState = new MonsterIdleState(this, stateMachine);
         MoveState = new MonsterMoveState(this, stateMachine);
@@ -91,6 +97,26 @@ public class MonsterController : ChrController
 
     public void OnDeath()
     {
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        StartCoroutine(DissolveCoroutine());
+    }
+
+    public void OnDamaged(int damage)
+    {
+        popupPool.ShowDamage(transform.position, damage, mainCamera);
+    }
+    private IEnumerator DissolveCoroutine()
+    {
+        float time = 0f;
+
+        while (time < dissolveDuration)
+        {
+            float t = time / dissolveDuration;
+            material.SetFloat("_Dissolve", t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        material.SetFloat("_Dissolve", 1f);
     }
 }

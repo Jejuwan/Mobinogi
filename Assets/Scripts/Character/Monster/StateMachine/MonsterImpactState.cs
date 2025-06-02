@@ -21,6 +21,7 @@ public class MonsterImpactState : State
         {
             monster.SetAnimTrigger("Impact");
         }
+        monster.OnDamaged(30);
     }
 
     public override void Tick(float deltaTime)

@@ -1,0 +1,11 @@
+{
+    "asset": "5eb631e77fa81a64bb792d329516c1c0",
+    "fileName": "01972514-f454-7f5a-86a9-475dbcb682f8.wav",
+    "prompt": "A sharp metal blade slashing into a fleshy monster body with a wet impact sound.",
+    "negativePrompt": "",
+    "model": "0ee39b33-2893-4e0f-8c46-0e0bdd4eda85",
+    "customSeed": -1,
+    "duration": 1.0,
+    "autoTrim": true,
+    "hasReference": false
+}

@@ -1,0 +1,11 @@
+{
+    "asset": "5eb631e77fa81a64bb792d329516c1c0",
+    "fileName": "01972513-c0f8-73e3-a314-de6aaf5008c2.wav",
+    "prompt": "Generate a short monster hurt sound. It should be a low-pitched grunt or growl, like a creature reacting to being hit in combat.",
+    "negativePrompt": "",
+    "model": "0ee39b33-2893-4e0f-8c46-0e0bdd4eda85",
+    "customSeed": -1,
+    "duration": 1.0,
+    "autoTrim": true,
+    "hasReference": false
+}

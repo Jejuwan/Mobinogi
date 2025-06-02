@@ -3,6 +3,7 @@ using UnityEngine;
 public class ChrController : MonoBehaviour
 {
     [SerializeField] public GameObject Weapon;
+    [SerializeField] protected Camera mainCamera;
 
     public Animator animator;
     protected CharacterController characterController;

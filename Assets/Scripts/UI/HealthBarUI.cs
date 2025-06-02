@@ -24,11 +24,17 @@ public class HealthBarUI : MonoBehaviour
     public void Bind(HealthComponent health)
     {
         health.OnHealthChanged += UpdateUI;
+        health.OnDeath += Destroy;
         UpdateUI(health.currentHealth, health.maxHealth);
     }
 
     private void UpdateUI(int current, int max)
     {
         healthSlider.value = (float)current / max;
+    }
+
+    private void Destroy()
+    {
+        Destroy(this.gameObject);
     }
 }
