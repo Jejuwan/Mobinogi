@@ -4,16 +4,30 @@ public class PlayerController : ChrController
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] public PlayerInputHandler Input;
+    [SerializeField] public PlayerSkillController SkillController;
+
+    public static PlayerController Instance { get; private set; }
     public GameObject TargetMonster { get; set; }
 
     protected override void Awake()
     {
         base.Awake();
 
+        if(Instance ==null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         IdleState = new PlayerIdleState(this, stateMachine);
         MoveState = new PlayerMoveState(this, stateMachine);
         AttackState = new PlayerAttackState(this, stateMachine);
         ImpactState = new PlayerImpactState(this, stateMachine);
+        SkillState = new PlayerSkillState(this, stateMachine);
 
         stateMachine.AddTransition(IdleState, MoveState, () => Input.IsMoving);
         stateMachine.AddTransition(MoveState, IdleState, () => !Input.IsMoving);

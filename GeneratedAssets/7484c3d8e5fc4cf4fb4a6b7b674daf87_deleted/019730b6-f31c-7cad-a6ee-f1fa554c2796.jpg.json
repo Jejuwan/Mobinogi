@@ -1,0 +1,18 @@
+{
+    "asset": "7484c3d8e5fc4cf4fb4a6b7b674daf87",
+    "fileName": "019730b6-f31c-7cad-a6ee-f1fa554c2796.jpg",
+    "prompt": "A simple circular cooldown overlay icon for a mobile RPG skill button UI. The icon is a flat semi-transparent black circle with no borders or decoration, and a transparent background. Designed to visually mask a skill icon from bottom to top using a radial fill effect.",
+    "negativePrompt": "",
+    "model": "03d5ab0c-51c5-44a0-ba07-822e93561aca",
+    "customSeed": -1,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

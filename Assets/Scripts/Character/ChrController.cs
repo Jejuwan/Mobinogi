@@ -8,20 +8,28 @@ public class ChrController : MonoBehaviour
     public Animator animator;
     protected CharacterController characterController;
 
-    protected StateMachine stateMachine;
+    public StateMachine stateMachine;
     public HealthComponent healthComponent;
     public State IdleState { get; set; }
     public State MoveState { get; set; }
     public State AttackState { get; set; }
     public State ImpactState { get; set; }
     public State DeathState { get; set; }
+    public State SkillState { get; set; }
 
     protected virtual void Awake()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        healthComponent = GetComponent<HealthComponent>(); 
-
+        healthComponent = GetComponent<HealthComponent>();
+        healthComponent.OnDeath += () =>
+        {
+            Collider[] colliders = this.gameObject.GetComponentsInChildren<Collider>();
+            foreach (Collider col in colliders)
+            {
+                col.enabled = false;
+            }
+        };
         stateMachine = new StateMachine();
     }
 
@@ -34,6 +42,10 @@ public class ChrController : MonoBehaviour
     protected virtual void Update()
     {
         stateMachine.Tick(Time.deltaTime);
+        if(this is PlayerController)
+        {
+            Debug.Log(stateMachine.currentState.ToString());
+        }
     }
 
     public void SetAnimBool(string name, bool value)
@@ -69,7 +81,11 @@ public class ChrController : MonoBehaviour
     public void OnEnableCollider(int val)
     {
         bool enabled = val != 0 ? true : false;
-        Weapon.GetComponent<Collider>().enabled = enabled;
+        Collider[] colliders = Weapon.GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = enabled;
+        }
     }
 }
 

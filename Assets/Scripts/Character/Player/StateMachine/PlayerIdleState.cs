@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerIdleState : State
 {
     private readonly PlayerController player;
@@ -10,6 +12,7 @@ public class PlayerIdleState : State
     public override void Enter()
     {
         player.SetAnimBool("isWalking", false);
+        player.animator.Play("Idle");
     }
 
     public override void Tick(float deltaTime)
