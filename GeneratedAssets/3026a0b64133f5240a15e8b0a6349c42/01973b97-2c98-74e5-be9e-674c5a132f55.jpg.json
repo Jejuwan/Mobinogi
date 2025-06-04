@@ -1,0 +1,18 @@
+{
+    "asset": "3026a0b64133f5240a15e8b0a6349c42",
+    "fileName": "01973b97-2c98-74e5-be9e-674c5a132f55.jpg",
+    "prompt": "Create a circular skill icon for a warrior's 'Blade Impact' ability in a fantasy RPG. The icon features a massive sword crashing down into the ground, with explosive shockwaves, glowing cracks, and flying rocks. The background should use intense red, orange, and yellow colors to emphasize raw power and destruction. The composition should be stylized, dramatic, and easily readable as a mobile RPG skill icon.",
+    "negativePrompt": "",
+    "model": "03d5ab0c-51c5-44a0-ba07-822e93561aca",
+    "customSeed": -1,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

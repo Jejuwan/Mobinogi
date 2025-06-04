@@ -1,0 +1,18 @@
+{
+    "asset": "ee25425e10056dc43ac3cd6aefd80cb9",
+    "fileName": "01973b7c-4676-77b7-852d-60335b3feb69.jpg",
+    "prompt": "Design a circular skill icon for a warrior's 'Amaranth Kick' ability in a fantasy RPG. The icon shows a powerful armored boot performing a high-speed kick with explosive energy, as if striking a stunned enemy. The background is dramatic red and orange with a burst or shockwave effect to emphasize impact. The composition is centered and fits cleanly within a round UI icon. Stylized and readable for a mobile game interface.",
+    "negativePrompt": "",
+    "model": "03d5ab0c-51c5-44a0-ba07-822e93561aca",
+    "customSeed": -1,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}
