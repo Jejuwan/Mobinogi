@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ChrController : MonoBehaviour
 {
-    [SerializeField] public GameObject Weapon;
+    [SerializeField] public GameObject[] attackColliders;
     [SerializeField] protected Camera mainCamera;
 
     public Animator animator;
@@ -42,10 +42,10 @@ public class ChrController : MonoBehaviour
     protected virtual void Update()
     {
         stateMachine.Tick(Time.deltaTime);
-        if(this is PlayerController)
-        {
-            Debug.Log(stateMachine.currentState.ToString());
-        }
+        //if (this is PlayerController)
+        //{
+        //    Debug.Log(stateMachine.currentState.ToString());
+        //}
     }
 
     public void SetAnimBool(string name, bool value)
@@ -78,13 +78,20 @@ public class ChrController : MonoBehaviour
         stateMachine.SetState(state);
     }
 
-    public void OnEnableCollider(int val)
+    public void OnEnableCollider(int idx)
     {
-        bool enabled = val != 0 ? true : false;
-        Collider[] colliders = Weapon.GetComponentsInChildren<Collider>();
+        Collider[] colliders = attackColliders[idx].GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
         {
-            col.enabled = enabled;
+            col.enabled = true;
+        }
+    }
+    public void OnDisableCollider(int idx)
+    {
+        Collider[] colliders = attackColliders[idx].GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = false;
         }
     }
 }

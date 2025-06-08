@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: ShieldBash
   m_EditorClassIdentifier: Assembly-CSharp::ActiveSkill
   skillName: ShieldBash
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8738730d2dcd9cd458920358432d59d7, type: 3}
   description: 
   tags: 01000000
-  cooldown: 5
+  cooldown: 0
+  casting: 0
+  castingTime: 0
+  baseDamage: 30

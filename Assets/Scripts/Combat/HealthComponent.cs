@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
-    [SerializeField] public int maxHealth { get; set; } = 100;
+    [SerializeField] public int maxHealth { get; set; } = 10000;
     public int currentHealth { get; set; }
     public bool IsDead;
 
@@ -16,7 +16,7 @@ public class HealthComponent : MonoBehaviour
         IsDead = false;
     }
 
-        public void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth = Mathf.Max(currentHealth - damage, 0);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);

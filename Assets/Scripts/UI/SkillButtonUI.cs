@@ -6,7 +6,7 @@ public class SkillButtonUI : MonoBehaviour
 {
     [SerializeField] private Image cooldownOverlay;
     [SerializeField] private float cooldownTime = 5f;
-    [SerializeField] private SkillBase skill; // 연결된 스킬 데이터
+    [SerializeField] private ActiveSkill skill; // 연결된 스킬 데이터
     [SerializeField] private PlayerController playerController;
 
     private Button button;

@@ -1,10 +1,11 @@
 using System.Threading;
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSkillState : State
 {
     private readonly PlayerController player;
-
     public PlayerSkillState(PlayerController player, StateMachine sm) : base(sm)
     {
         this.player = player;
@@ -13,6 +14,7 @@ public class PlayerSkillState : State
     public override void Enter()
     {
         player.SetAnimTrigger(player.SkillController.skillHandler.currentSkillName);
+        PlayerSkillController.Instance.StartCasting();
     }
 
     public override void Tick(float deltaTime)
@@ -41,5 +43,15 @@ public class PlayerSkillState : State
     }
     public override void Exit()
     {
+        PlayerSkillController.Instance.castingIcon.gameObject.SetActive(false);
+    }
+
+    IEnumerator WaitUntilCasting()
+    {
+        // isCasting이 true가 될 때까지 기다림
+        yield return new WaitUntil(() => PlayerSkillController.Instance.PlayerCastingReady);
+
+        // isCasting이 true가 된 이후 실행할 코드
+       // Start
     }
 }

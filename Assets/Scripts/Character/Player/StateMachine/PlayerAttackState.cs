@@ -13,6 +13,7 @@ public class PlayerAttackState : State
     public override void Enter()
     {
         player.SetAnimTrigger("Attack");
+        PlayerSkillController.Instance.currentActiveSkill = null;
     }
 
     public override void Tick(float deltaTime)
@@ -41,5 +42,6 @@ public class PlayerAttackState : State
     }
     public override void Exit()
     {
+        player.OnDisableCollider(0);
     }
 }

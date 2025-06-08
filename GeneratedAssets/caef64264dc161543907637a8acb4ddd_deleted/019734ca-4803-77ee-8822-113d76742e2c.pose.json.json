@@ -1,8 +1,0 @@
-{
-    "asset": "caef64264dc161543907637a8acb4ddd",
-    "fileName": "019734ca-4803-77ee-8822-113d76742e2c.pose.json",
-    "prompt": "Create a melee combo attack animation for a warrior character. The warrior holds a one-handed sword in the right hand and a shield in the left hand. The animation consists of three fast, fluid consecutive slashes, while the character remains stationary (no root motion). The sword attacks should be performed aggressively, with minor shield movements for balance or defense. The final strike should have a slightly stronger impact and a clean ending pose. The animation is suitable for a mobile RPG battle scene.",
-    "negativePrompt": "",
-    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
-    "customSeed": 706591210
-}

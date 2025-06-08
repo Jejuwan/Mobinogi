@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : ChrController
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] public int atk;
     [SerializeField] public PlayerInputHandler Input;
     [SerializeField] public PlayerSkillController SkillController;
 
@@ -87,6 +88,12 @@ public class PlayerController : ChrController
         {
             transform.rotation = Quaternion.LookRotation(rotateVector);
         }
+    }
+
+    public void SetPlayerCastingReady(int boolParam)
+    {
+        bool enabled = boolParam != 0 ? true : false;
+        PlayerSkillController.Instance.PlayerCastingReady = enabled;
     }
 
     public void SetIdleState()

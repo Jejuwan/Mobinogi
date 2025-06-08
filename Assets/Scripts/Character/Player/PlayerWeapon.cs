@@ -23,8 +23,16 @@ public class PlayerWeapon : MonoBehaviour
             MonsterController monster = other.GetComponent<MonsterController>();
             if (monster != null)
             {
-               if(!monster.healthComponent.IsDead)
-                   monster.SetState(monster.ImpactState);
+                if (!monster.healthComponent.IsDead)
+                {
+                    bool skillAttack = PlayerSkillController.Instance.currentActiveSkill == null ? false : true;
+                    int baseDamage = skillAttack ? PlayerSkillController.Instance.currentActiveSkill.baseDamage : PlayerController.Instance.atk;
+                    int dmg = Random.Range(baseDamage - baseDamage / 10, baseDamage + baseDamage / 10);
+
+                    monster.healthComponent.TakeDamage(dmg);
+                    monster.OnDamaged(dmg);
+                    monster.SetState(monster.ImpactState);
+                }
             }
         }
     }

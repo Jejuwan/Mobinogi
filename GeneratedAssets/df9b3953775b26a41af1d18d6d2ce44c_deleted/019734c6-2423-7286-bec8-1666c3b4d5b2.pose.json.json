@@ -1,8 +1,0 @@
-{
-    "asset": "df9b3953775b26a41af1d18d6d2ce44c",
-    "fileName": "019734c6-2423-7286-bec8-1666c3b4d5b2.pose.json",
-    "prompt": "Create a melee combat animation for a warrior character. The animation should depict a fast, fluid series of three consecutive slashing sword attacks while slightly stepping forward. The character uses a one-handed sword, and the motion emphasizes speed and aggression. Each slash should be followed by a brief recovery pose, and the final hit should be slightly stronger with a wide arc. The animation should be loopable at the end or have a clean end pose.",
-    "negativePrompt": "",
-    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
-    "customSeed": 2116094835
-}

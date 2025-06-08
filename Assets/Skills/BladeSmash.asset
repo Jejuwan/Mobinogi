@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: BladeSmash
   m_EditorClassIdentifier: Assembly-CSharp::ActiveSkill
   skillName: BladeSmash
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4453f0efc59e4be44b462bec3a690dd1, type: 3}
   description: 
   tags: 01000000
   cooldown: 5
+  casting: 1
+  castingTime: 0.5
+  baseDamage: 50

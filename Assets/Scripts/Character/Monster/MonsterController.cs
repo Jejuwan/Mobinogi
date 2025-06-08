@@ -97,7 +97,6 @@ public class MonsterController : ChrController
 
     public void OnDeath()
     {
-        //Destroy(this.gameObject);
         StartCoroutine(DissolveCoroutine());
     }
 
