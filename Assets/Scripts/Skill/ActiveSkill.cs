@@ -10,7 +10,14 @@ public class ActiveSkill : SkillBase
     public bool casting;
     public float castingTime;
     public int baseDamage;
+    public int gainRage;
 
+    public bool raged { get; set; }
+
+    private void Awake()
+    {
+        raged = false;
+    }
     public override void Activate(GameObject user, GameObject target = null)
     {   
         PlayerController controller = user.GetComponent<PlayerController>();

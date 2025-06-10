@@ -28,10 +28,7 @@ public class DamageResponder : MonoBehaviour
             Destroy(effect.gameObject, effect.main.duration + 0.5f);
         }
 
-        if (audioSource != null && hitSound != null)
-        {
-            audioSource.PlayOneShot(hitSound);
-        }
+        AudioController.Instance.PlaySound(hitSound);
     }
 
     private void OnDeath(GameObject killer)

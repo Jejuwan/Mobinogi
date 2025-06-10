@@ -6,14 +6,18 @@ public class SkillButtonUI : MonoBehaviour
 {
     [SerializeField] private Image cooldownOverlay;
     [SerializeField] private float cooldownTime = 5f;
+    [SerializeField] public GameObject rageEffect;
     [SerializeField] private ActiveSkill skill; // 연결된 스킬 데이터
     [SerializeField] private PlayerController playerController;
 
+    public RectTransform rectTransform { get; set; }
     private Button button;
     private bool isCoolingDown = false;
+    private float rageEffectSize = 500f;
 
     private void Awake()
     {
+        rectTransform = GetComponent<RectTransform>();
         button = GetComponent<Button>();
         button.onClick.AddListener(OnClickSkillButton);
 

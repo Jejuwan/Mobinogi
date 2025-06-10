@@ -13,7 +13,7 @@ public class PlayerSkillState : State
 
     public override void Enter()
     {
-        player.SetAnimTrigger(player.SkillController.skillHandler.currentSkillName);
+        player.SetAnimTrigger(PlayerSkillController.Instance.skillHandler.currentSkillName);
         PlayerSkillController.Instance.StartCasting();
     }
 

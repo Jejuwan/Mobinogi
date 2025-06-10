@@ -6,8 +6,9 @@ public class PlayerSkillController : MonoBehaviour
 {
     [SerializeField] public CastingBarUI castingIcon;
     [SerializeField] public GameObject castingBar;
+    [SerializeField] public WarriorSkillHandler skillHandler;
+
     public static PlayerSkillController Instance;
-    public WarriorSkillHandler skillHandler;
     public ActiveSkill currentActiveSkill { get; set; }
 
     public bool PlayerCastingReady { get; set; } 
@@ -23,7 +24,6 @@ public class PlayerSkillController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        skillHandler = GetComponent<WarriorSkillHandler>();
         PlayerCastingReady = false;
         castingIcon.gameObject.SetActive(false);
     }
@@ -37,7 +37,13 @@ public class PlayerSkillController : MonoBehaviour
     {
         castingIcon.gameObject.SetActive(true);
         castingIcon.SetSkillIcon(skill.icon);
-        castingBar.SetActive(skill.casting);
+
+        skill.raged = skillHandler.rage.IsMax;
+
+        if (!skill.raged)
+            castingBar.SetActive(skill.casting);
+        else
+            castingBar.SetActive(false);
 
         currentActiveSkill = skill;
         skillHandler.TryUseSkill(skill);
@@ -63,7 +69,7 @@ public class PlayerSkillController : MonoBehaviour
     {
         //ShowCastUI(skill.icon, skill.castTime);
 
-        if (skill.casting)
+        if (skill.casting && !skill.raged)
         {
             PlayerController.Instance.animator.speed = 0f;
             float elapsed = 0f;
@@ -85,5 +91,25 @@ public class PlayerSkillController : MonoBehaviour
         //HideCastUI();
         PlayerController.Instance.animator.speed = 1f;
   
+    }
+
+    public void OnBladeSmash()
+    {
+        skillHandler.BladeSmash();
+    }
+
+    public void OnShieldBash()
+    {
+        skillHandler.ShieldBash();
+    }
+
+    public void OnKick()
+    {
+        skillHandler.Kick();
+    }
+
+    public void OnTaunt()
+    {
+        skillHandler.Taunt();
     }
 }

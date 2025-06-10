@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RageComponent : MonoBehaviour
 {
-   public int currentRage { get; set; }
+    public int currentRage { get; set; }
     public int maxRage = 100;
 
     public event Action<int, int> OnRageChanged;
@@ -20,14 +20,18 @@ public class RageComponent : MonoBehaviour
         OnRageChanged?.Invoke(currentRage, maxRage);
 
         if (IsMax)
-            PlayerEffectController.instance.ShowRageEffect();
+        {
+           PlayerEffectController.Instance.ShowEffect(PlayerEffectController.Instance.rageEffectPrefab, PlayerEffectController.Instance.rageEffect,
+            PlayerController.Instance.transform.position, Quaternion.identity, .7f);
+            UIController.Instance.ShowRageUI();
+        }
     }
 
-    public void ConsumeRage(int amount)
+    public void ConsumeRage()
     {
-        if (IsMax)
-            PlayerEffectController.instance.DestroyRageEffect();
-
+        PlayerEffectController.Instance.DestroyEffect(PlayerEffectController.Instance.rageEffect);
+        UIController.Instance.DestroyRageUI();
+        PlayerSkillController.Instance.currentActiveSkill.raged = false;
         currentRage = 0;
         OnRageChanged?.Invoke(currentRage, maxRage);
     }

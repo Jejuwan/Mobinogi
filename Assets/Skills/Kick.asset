@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ActiveSkill
   skillName: Kick
   icon: {fileID: 21300000, guid: ee25425e10056dc43ac3cd6aefd80cb9, type: 3}
-  description: 
-  tags: 01000000
+  sound: {fileID: 8300000, guid: 385778c2786529144a3552120d655fb5, type: 3}
+  rageSound: {fileID: 8300000, guid: b5e8688528cae5349bc761a073d7de31, type: 3}
   cooldown: 5
   casting: 1
   castingTime: 0.5
   baseDamage: 40
+  gainRage: 20

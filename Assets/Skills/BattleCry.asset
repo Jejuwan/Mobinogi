@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ActiveSkill
   skillName: BattleCry
   icon: {fileID: 21300000, guid: 4b56d10e0f30dec4bbb9e1f3878dc9a7, type: 3}
-  description: 
-  tags: 01000000
+  sound: {fileID: 8300000, guid: 980cb690beff934488ff3b3a38b5835d, type: 3}
+  rageSound: {fileID: 8300000, guid: 12b97c1c58f75334d8c3671c489ea4b9, type: 3}
   cooldown: 5
   casting: 0
   castingTime: 0
   baseDamage: 20
+  gainRage: 20

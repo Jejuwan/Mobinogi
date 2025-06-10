@@ -1,27 +1,40 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 public class PlayerEffectController : MonoBehaviour
 {
     [SerializeField] public ParticleSystem rageEffectPrefab;
     [SerializeField] public ParticleSystem swordTrailPrefab;
-    [SerializeField] public ParticleSystem ragedSwordTrailPrefab;
+    [SerializeField] public ParticleSystem swordTrailRagePrefab;
+    [SerializeField] public ParticleSystem shieldBashPrefab;
+    [SerializeField] public ParticleSystem shieldBashRagePrefab;
+    [SerializeField] public ParticleSystem kickPrefab;
+    [SerializeField] public ParticleSystem kickRagePrefab;
+    [SerializeField] public ParticleSystem TauntPrefab;
+    [SerializeField] public ParticleSystem TauntRagePrefab;
 
-    public static PlayerEffectController instance;
-    private ParticleSystem rageEffect;
-    private ParticleSystem swordTrailEffect;
-    private ParticleSystem ragedSwordTrailEffect;
+    public static PlayerEffectController Instance;
+    public ParticleSystem rageEffect;
+    public ParticleSystem swordTrailEffect;
+    public ParticleSystem swordTrailRageEffect;
+    public ParticleSystem shieldBashEffect;
+    public ParticleSystem shieldBashRageEffect;
+    public ParticleSystem kickEffect;
+    public ParticleSystem kickRageEffect;
+    public ParticleSystem tauntEffect;
+    public ParticleSystem tauntRageEffect;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -31,42 +44,32 @@ public class PlayerEffectController : MonoBehaviour
 
     }
 
-    public void ShowRageEffect()
+    public void ShowEffect(ParticleSystem inPs, ParticleSystem outPs, Vector3 pos, Quaternion quat, float localSize)
     {
-        if (rageEffectPrefab != null)
+        if (inPs != null)
         {
-            rageEffect = Instantiate(rageEffectPrefab, transform.position, Quaternion.identity);
-            rageEffect.transform.localScale = Vector3.one * 0.7f;
-            rageEffect.Play();
+            outPs = Instantiate(inPs, pos, quat);
+            outPs.transform.localScale = Vector3.one * localSize;
+            outPs.Play();
         }
     }
 
-    public void DestroyRageEffect()
+    public void DestroyEffect(ParticleSystem outPos)
     {
-        if (rageEffect != null)
+        if (outPos != null)
         {
-            Destroy(rageEffect.gameObject);
+            Destroy(outPos.gameObject);
         }
     }
 
-    public void ShowSwordTrailEffect()
+    public void ShowAndDestroyEffect(ParticleSystem inPs, ParticleSystem outPs, Vector3 pos, Quaternion quat, float localSize)
     {
-        if (swordTrailPrefab != null && ragedSwordTrailPrefab != null)
+        if (inPs != null)
         {
-            if (!PlayerSkillController.Instance.skillHandler.rage.IsMax)
-            {
-                swordTrailEffect = Instantiate(swordTrailPrefab, transform.position + Vector3.up * 1f, Quaternion.Euler(90f, 0, 0));
-                swordTrailEffect.transform.localScale = Vector3.one * 1f;
-                swordTrailEffect.Play();
-                Destroy(swordTrailEffect.gameObject, swordTrailEffect.main.duration + 0.5f);
-            }
-            else
-            {
-                ragedSwordTrailEffect = Instantiate(ragedSwordTrailPrefab, transform.position + Vector3.up * 1f, Quaternion.Euler(90f, 0, 0));
-                ragedSwordTrailEffect.transform.localScale = Vector3.one * 2f;
-                ragedSwordTrailEffect.Play();
-                Destroy(ragedSwordTrailEffect.gameObject, ragedSwordTrailEffect.main.duration + 0.5f);
-            }
+            outPs = Instantiate(inPs, pos, quat);
+            outPs.transform.localScale = Vector3.one * localSize;
+            outPs.Play();
+            Destroy(outPs.gameObject, outPs.main.duration + 0.5f);
         }
     }
 }

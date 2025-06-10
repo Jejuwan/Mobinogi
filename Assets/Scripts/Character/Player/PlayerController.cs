@@ -5,7 +5,6 @@ public class PlayerController : ChrController
     [SerializeField] private float moveSpeed;
     [SerializeField] public int atk;
     [SerializeField] public PlayerInputHandler Input;
-    [SerializeField] public PlayerSkillController SkillController;
 
     public static PlayerController Instance { get; private set; }
     public GameObject TargetMonster { get; set; }
