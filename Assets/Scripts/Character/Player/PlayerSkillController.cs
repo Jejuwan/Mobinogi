@@ -10,7 +10,7 @@ public class PlayerSkillController : MonoBehaviour
 
     public static PlayerSkillController Instance;
     public ActiveSkill currentActiveSkill { get; set; }
-
+    public int ultPercent { get; set; }
     public bool PlayerCastingReady { get; set; } 
 
     private void Awake()
@@ -26,6 +26,12 @@ public class PlayerSkillController : MonoBehaviour
 
         PlayerCastingReady = false;
         castingIcon.gameObject.SetActive(false);
+        ultPercent = 0;
+    }
+
+    private void Start()
+    {
+        UIController.Instance.UpdateUltPercent(ultPercent);
     }
 
     void CancelCast()
@@ -40,13 +46,25 @@ public class PlayerSkillController : MonoBehaviour
 
         skill.raged = skillHandler.rage.IsMax;
 
-        if (!skill.raged)
-            castingBar.SetActive(skill.casting);
-        else
-            castingBar.SetActive(false);
+        if (!skill.ult)
+        {
 
-        currentActiveSkill = skill;
-        skillHandler.TryUseSkill(skill);
+            if (!skill.raged)
+                castingBar.SetActive(skill.casting);
+            else
+                castingBar.SetActive(false);
+
+            currentActiveSkill = skill;
+            skillHandler.TryUseSkill(skill);
+        }
+        else
+        {
+            if(ultPercent >= 100)
+            {
+                currentActiveSkill = skill;
+                skillHandler.TryUseSkill(skill);
+            }
+        }
     }
 
     public void StartCasting()
@@ -111,5 +129,15 @@ public class PlayerSkillController : MonoBehaviour
     public void OnTaunt()
     {
         skillHandler.Taunt();
+    }
+
+    public void OnStartUltimate()
+    {
+        skillHandler.StartUltimate();
+    }
+
+    public void OnBladeImpact()
+    {
+        skillHandler.BladeImpact();
     }
 }

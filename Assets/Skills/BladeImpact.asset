@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ActiveSkill
   skillName: BladeImpact
   icon: {fileID: 21300000, guid: 3026a0b64133f5240a15e8b0a6349c42, type: 3}
-  sound: {fileID: 0}
+  sound: {fileID: 8300000, guid: 3433f38f8e88e9c4b86d5c83632e29be, type: 3}
   rageSound: {fileID: 0}
   cooldown: 0
   casting: 0
   castingTime: 0
-  baseDamage: 0
+  baseDamage: 200
   gainRage: 0
+  ult: 1
+  gainUlt: 0

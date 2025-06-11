@@ -13,7 +13,6 @@ public class SkillButtonUI : MonoBehaviour
     public RectTransform rectTransform { get; set; }
     private Button button;
     private bool isCoolingDown = false;
-    private float rageEffectSize = 500f;
 
     private void Awake()
     {
@@ -33,6 +32,8 @@ public class SkillButtonUI : MonoBehaviour
         if (PlayerController.Instance.stateMachine.currentState != PlayerController.Instance.AttackState)
             return;
 
+        if (skill.ult && PlayerSkillController.Instance.ultPercent < 100)
+            return;
         // 스킬 실행
         PlayerSkillController.Instance.TryUseSkill(skill);
 

@@ -11,6 +11,8 @@ public class ActiveSkill : SkillBase
     public float castingTime;
     public int baseDamage;
     public int gainRage;
+    public bool ult;
+    public int gainUlt;
 
     public bool raged { get; set; }
 

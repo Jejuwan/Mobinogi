@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
@@ -29,6 +30,17 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
             rage.GainRage(PlayerSkillController.Instance.currentActiveSkill.gainRage);
             AudioController.Instance.PlaySound(PlayerSkillController.Instance.currentActiveSkill.sound);
         }
+        if(!PlayerSkillController.Instance.currentActiveSkill.ult)
+        {
+            PlayerSkillController.Instance.ultPercent += PlayerSkillController.Instance.currentActiveSkill.gainUlt;
+            PlayerSkillController.Instance.ultPercent = Mathf.Min(PlayerSkillController.Instance.ultPercent, 100);
+            UIController.Instance.UpdateUltPercent(PlayerSkillController.Instance.ultPercent);
+        }
+        else
+        {
+            PlayerSkillController.Instance.ultPercent = 0;
+            UIController.Instance.UpdateUltPercent(PlayerSkillController.Instance.ultPercent);
+        }
     }
     public void BladeSmash()
     {
@@ -50,12 +62,12 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
         if (rage.IsMax)
         {
             PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.shieldBashRagePrefab, PlayerEffectController.Instance.shieldBashRageEffect,
-               PlayerController.Instance.transform.position + Vector3.up + Vector3.forward, Quaternion.identity, 1f);
+               PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
         }
         else
         {
             PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.shieldBashPrefab, PlayerEffectController.Instance.shieldBashEffect,
-               PlayerController.Instance.transform.position + Vector3.up + Vector3.forward, Quaternion.identity, 1f);
+               PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
         }
         UseSkill();
     }
@@ -65,13 +77,13 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
         if (rage.IsMax)
         {
             PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.kickRagePrefab, PlayerEffectController.Instance.kickRageEffect,
-                PlayerController.Instance.transform.position + Vector3.up + Vector3.forward, Quaternion.identity, 1f);
+                PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
 
         }
         else
         {
             PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.kickPrefab, PlayerEffectController.Instance.kickEffect,
-                PlayerController.Instance.transform.position + Vector3.up + Vector3.forward, Quaternion.identity, 1f);
+                PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
         }
         UseSkill();
     }
@@ -89,5 +101,20 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
                PlayerController.Instance.transform.position + Vector3.up, Quaternion.identity, 1f);
         }
         UseSkill();
+    }
+
+    public void StartUltimate()
+    {
+        CameraManager.instance.TriggerUltimate();
+    }
+
+    public void BladeImpact()
+    {
+        Quaternion rotation = Quaternion.AngleAxis(-30f, Vector3.up);
+        Vector3 vec = rotation * PlayerController.Instance.transform.forward;
+        PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.bladeImpactPrefab, PlayerEffectController.Instance.bladeImpactEffect,
+              PlayerController.Instance.transform.position + vec * 2f, Quaternion.identity, 3f);
+        AudioController.Instance.PlaySound(PlayerSkillController.Instance.currentActiveSkill.sound);
+
     }
 }

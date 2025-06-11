@@ -1,12 +1,15 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] private Canvas canvas;
+    [SerializeField] public Canvas canvas;
+    [SerializeField] public List<SkillButtonUI> SkillButtons;
+    [SerializeField] public UltPercentUI ultPercent;
+
     public static UIController Instance;
-    public List<SkillButtonUI> SkillButtons;
 
     private void Awake()
     {
@@ -44,5 +47,10 @@ public class UIController : MonoBehaviour
         {
             button.rageEffect.SetActive(false);
         }
+    }
+
+    public void UpdateUltPercent(int val)
+    {
+        ultPercent.UpdateUI(val);
     }
 }

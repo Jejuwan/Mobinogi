@@ -21,3 +21,5 @@ MonoBehaviour:
   castingTime: 0
   baseDamage: 30
   gainRage: 20
+  ult: 0
+  gainUlt: 7

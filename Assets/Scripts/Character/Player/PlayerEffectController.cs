@@ -13,6 +13,8 @@ public class PlayerEffectController : MonoBehaviour
     [SerializeField] public ParticleSystem kickRagePrefab;
     [SerializeField] public ParticleSystem TauntPrefab;
     [SerializeField] public ParticleSystem TauntRagePrefab;
+    [SerializeField] public ParticleSystem bladeImpactPrefab;
+    [SerializeField] public ParticleSystem bladeImpactRagePrefab;
 
     public static PlayerEffectController Instance;
     public ParticleSystem rageEffect;
@@ -24,6 +26,8 @@ public class PlayerEffectController : MonoBehaviour
     public ParticleSystem kickRageEffect;
     public ParticleSystem tauntEffect;
     public ParticleSystem tauntRageEffect;
+    public ParticleSystem bladeImpactEffect;
+    public ParticleSystem bladeImpactRageEffect;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
