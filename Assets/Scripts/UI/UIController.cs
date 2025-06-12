@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] public Canvas canvas;
     [SerializeField] public List<SkillButtonUI> SkillButtons;
-    [SerializeField] public UltPercentUI ultPercent;
+    [SerializeField] public UltSkillUI ultPercent;
 
     public static UIController Instance;
 
@@ -52,5 +52,10 @@ public class UIController : MonoBehaviour
     public void UpdateUltPercent(int val)
     {
         ultPercent.UpdateUI(val);
+    }
+
+    public void UpdateGrayScale(bool enabled)
+    {
+        ultPercent.SetGrayscale(enabled);
     }
 }

@@ -33,12 +33,9 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
         if(!PlayerSkillController.Instance.currentActiveSkill.ult)
         {
             PlayerSkillController.Instance.ultPercent += PlayerSkillController.Instance.currentActiveSkill.gainUlt;
+            if(PlayerSkillController.Instance.ultPercent >= 100)
+                UIController.Instance.UpdateGrayScale(false);
             PlayerSkillController.Instance.ultPercent = Mathf.Min(PlayerSkillController.Instance.ultPercent, 100);
-            UIController.Instance.UpdateUltPercent(PlayerSkillController.Instance.ultPercent);
-        }
-        else
-        {
-            PlayerSkillController.Instance.ultPercent = 0;
             UIController.Instance.UpdateUltPercent(PlayerSkillController.Instance.ultPercent);
         }
     }
@@ -115,6 +112,9 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
         PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.bladeImpactPrefab, PlayerEffectController.Instance.bladeImpactEffect,
               PlayerController.Instance.transform.position + vec * 2f, Quaternion.identity, 3f);
         AudioController.Instance.PlaySound(PlayerSkillController.Instance.currentActiveSkill.sound);
-
+       
+        PlayerSkillController.Instance.ultPercent = 0;
+        UIController.Instance.UpdateUltPercent(PlayerSkillController.Instance.ultPercent);
+        UIController.Instance.UpdateGrayScale(true);
     }
 }
