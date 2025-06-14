@@ -4,7 +4,6 @@ public class PlayerController : ChrController
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] public int atk;
-    [SerializeField] public PlayerInputHandler Input;
 
     public static PlayerController Instance { get; private set; }
     public GameObject TargetMonster { get; set; }
@@ -29,8 +28,8 @@ public class PlayerController : ChrController
         ImpactState = new PlayerImpactState(this, stateMachine);
         SkillState = new PlayerSkillState(this, stateMachine);
 
-        stateMachine.AddTransition(IdleState, MoveState, () => Input.IsMoving);
-        stateMachine.AddTransition(MoveState, IdleState, () => !Input.IsMoving);
+        stateMachine.AddTransition(IdleState, MoveState, () => InputManager.instance.IsMoving);
+        stateMachine.AddTransition(MoveState, IdleState, () => !InputManager.instance.IsMoving);
         stateMachine.AddTransition(IdleState, AttackState, () =>
         {
             var closeMonster = GetClosestMonster();
@@ -77,13 +76,13 @@ public class PlayerController : ChrController
 
     public void Move()
     {
-        Vector3 moveVector = new Vector3(Input.MoveInput.x, -10f/moveSpeed, Input.MoveInput.y);
+        Vector3 moveVector = new Vector3(InputManager.instance.MoveInput.x, -10f/moveSpeed, InputManager.instance.MoveInput.y);
         characterController.Move(moveVector * moveSpeed* Time.deltaTime);
 
         Vector3 rotateVector = moveVector;
         rotateVector.y = 0f;
 
-        if (Input.MoveInput.sqrMagnitude != 0)
+        if (InputManager.instance.MoveInput.sqrMagnitude != 0)
         {
             transform.rotation = Quaternion.LookRotation(rotateVector);
         }

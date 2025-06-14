@@ -18,7 +18,7 @@ public class PlayerMoveState : State
     {
         player.Move();
 
-        if (!player.Input.IsMoving)
+        if (!InputManager.instance.IsMoving)
         {
             stateMachine.SetState(player.IdleState);
         }

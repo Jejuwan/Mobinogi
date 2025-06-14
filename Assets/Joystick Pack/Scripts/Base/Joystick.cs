@@ -39,6 +39,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     private Camera cam;
 
     private Vector2 input = Vector2.zero;
+    private bool isTouching = false; // 마우스 누른 상태 추적
+    private PointerEventData pointerEventData;
 
     protected virtual void Start()
     {
@@ -57,9 +59,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchoredPosition = Vector2.zero;
     }
 
+    void Update()
+    {
+
+    }
+
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        OnDrag(eventData);
+        //OnDrag(eventData);
+        isTouching = true;
+        pointerEventData = eventData;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -71,6 +80,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
         Vector2 radius = background.sizeDelta / 2;
         input = (eventData.position - position) / (radius * canvas.scaleFactor);
+        Debug.Log(eventData.position);
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
         handle.anchoredPosition = input * radius * handleRange;
@@ -133,6 +143,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     {
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
+        isTouching = false;
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
@@ -144,6 +155,20 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
             return localPoint - (background.anchorMax * baseRect.sizeDelta) + pivotOffset;
         }
         return Vector2.zero;
+    }
+
+    public void moveJoystick(Vector2 currentPos)
+    {
+        cam = null;
+        if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+            cam = canvas.worldCamera;
+
+        Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+        Vector2 radius = background.sizeDelta / 2;
+        input = currentPos / (radius * canvas.scaleFactor);
+        FormatInput();
+        HandleInput(input.magnitude, input.normalized, radius, cam);
+        handle.anchoredPosition = input * radius * handleRange;
     }
 }
 
