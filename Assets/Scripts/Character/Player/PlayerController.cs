@@ -76,7 +76,15 @@ public class PlayerController : ChrController
 
     public void Move()
     {
-        Vector3 moveVector = new Vector3(InputManager.instance.MoveInput.x, -10f/moveSpeed, InputManager.instance.MoveInput.y);
+        Vector3 camForward = CameraManager.instance.mainCam.transform.forward;
+        Vector3 camRight = CameraManager.instance.mainCam.transform.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        //Vector3 moveVector = new Vector3(InputManager.instance.MoveInput.x, -10f/moveSpeed, InputManager.instance.MoveInput.y);
+        Vector3 moveVector = camForward * InputManager.instance.MoveInput.y + camRight * InputManager.instance.MoveInput.x;
         characterController.Move(moveVector * moveSpeed* Time.deltaTime);
 
         Vector3 rotateVector = moveVector;

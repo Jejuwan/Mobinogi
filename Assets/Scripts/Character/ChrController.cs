@@ -42,10 +42,7 @@ public class ChrController : MonoBehaviour
     protected virtual void Update()
     {
         stateMachine.Tick(Time.deltaTime);
-        //if (this is PlayerController)
-        //{
-        //    Debug.Log(stateMachine.currentState.ToString());
-        //}
+        characterController.Move(new Vector3(0, -9.8f*Time.deltaTime, 0));
     }
 
     public void SetAnimBool(string name, bool value)

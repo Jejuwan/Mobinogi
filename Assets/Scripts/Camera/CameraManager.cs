@@ -16,7 +16,8 @@ public class CameraManager : MonoBehaviour
     public LayerMask maskWithoutMonster;
     private Coroutine camSwitchRoutine;
 
-    
+    private float cameraYLimitMin;
+    private float cameraYLimitMax;
 
     private void Awake()
     {
@@ -27,6 +28,9 @@ public class CameraManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        cameraYLimitMin = 25f;
+        cameraYLimitMax = 75f;
     }
 
     private void Update()
@@ -78,7 +82,8 @@ public class CameraManager : MonoBehaviour
     public void SetOrbitAxis(Vector2 axis)
     {
         orbit.HorizontalAxis.Value += axis.x;
-        orbit.VerticalAxis.Value += axis.y;
+        orbit.VerticalAxis.Value -= axis.y;
+        orbit.VerticalAxis.Value = Mathf.Clamp(orbit.VerticalAxis.Value, 25f, 75f);
     }
 
 }

@@ -22,6 +22,9 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
     public bool IsMoving => MoveInput.sqrMagnitude > 0.01f;
     private PointerEventData pointerEventData; 
 
+    public enum InputMode { Move, View}
+    public InputMode currentInputMode;
+
     private void Awake()
     {
         if(instance!=null)
@@ -61,12 +64,16 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
                 {
                     lastPosition = currentPos;
                     isDragging = true;
+                    currentInputMode = InputMode.View;
                 }
                 else
                 {
-                    Vector2 delta = (currentPos - lastPosition) * sensitivity;
-                    OnDragEvent?.Invoke(delta);
-                    lastPosition = currentPos;
+                    if (currentInputMode == InputMode.View)
+                    {
+                        Vector2 delta = (currentPos - lastPosition) * sensitivity;
+                        OnDragEvent?.Invoke(delta);
+                        lastPosition = currentPos;
+                    }
                 }
             }
             else
@@ -76,13 +83,17 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
                     isDragging = true;
                     joystick.transform.position = currentPos;
                     joystick.gameObject.SetActive(true);
+                    currentInputMode = InputMode.Move;
                 }
                 else
                 {
-                    float horizontal = joystick.Horizontal;
-                    float vertical = joystick.Vertical;
-                    MoveInput = new Vector2(horizontal, vertical).normalized;
-                    joystick.moveJoystick(currentPos);    
+                    if (currentInputMode == InputMode.Move)
+                    {
+                        float horizontal = joystick.Horizontal;
+                        float vertical = joystick.Vertical;
+                        MoveInput = new Vector2(horizontal, vertical).normalized;
+                        joystick.moveJoystick(currentPos);
+                    }
                 }
             }
         }
