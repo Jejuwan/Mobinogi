@@ -39,8 +39,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     private Camera cam;
 
     private Vector2 input = Vector2.zero;
-    private bool isTouching = false; // 마우스 누른 상태 추적
-    private PointerEventData pointerEventData;
 
     protected virtual void Start()
     {
@@ -67,23 +65,21 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         //OnDrag(eventData);
-        isTouching = true;
-        pointerEventData = eventData;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        cam = null;
-        if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
-            cam = canvas.worldCamera;
+        //cam = null;
+        //if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+        //    cam = canvas.worldCamera;
 
-        Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
-        Vector2 radius = background.sizeDelta / 2;
-        input = (eventData.position - position) / (radius * canvas.scaleFactor);
-        Debug.Log(eventData.position);
-        FormatInput();
-        HandleInput(input.magnitude, input.normalized, radius, cam);
-        handle.anchoredPosition = input * radius * handleRange;
+        //Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+        //Vector2 radius = background.sizeDelta / 2;
+        //input = (eventData.position - position) / (radius * canvas.scaleFactor);
+        //Debug.Log(eventData.position);
+        //FormatInput();
+        //HandleInput(input.magnitude, input.normalized, radius, cam);
+        //handle.anchoredPosition = input * radius * handleRange;
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
@@ -141,9 +137,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-        input = Vector2.zero;
-        handle.anchoredPosition = Vector2.zero;
-        isTouching = false;
+        //input = Vector2.zero;
+        //handle.anchoredPosition = Vector2.zero;
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
@@ -165,10 +160,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
         Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
         Vector2 radius = background.sizeDelta / 2;
-        input = currentPos / (radius * canvas.scaleFactor);
+        input = (currentPos - position) / (radius * canvas.scaleFactor);
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
         handle.anchoredPosition = input * radius * handleRange;
+    }
+
+    public void stopJoystick()
+    {
+        input = Vector2.zero;
+        handle.anchoredPosition = Vector2.zero;
     }
 }
 

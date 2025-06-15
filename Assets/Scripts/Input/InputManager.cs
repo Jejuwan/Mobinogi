@@ -75,15 +75,13 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
                 {
                     isDragging = true;
                     joystick.transform.position = currentPos;
+                    joystick.gameObject.SetActive(true);
                 }
                 else
                 {
                     float horizontal = joystick.Horizontal;
                     float vertical = joystick.Vertical;
                     MoveInput = new Vector2(horizontal, vertical).normalized;
-
-                    //Debug.Log(currentPos);
-                    Vector2 delta = (currentPos - lastPosition) * sensitivity;
                     joystick.moveJoystick(currentPos);    
                 }
             }
@@ -91,6 +89,9 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
         else
         {
             isDragging = false;
+            MoveInput = Vector2.zero;
+            joystick.stopJoystick();
+            joystick.gameObject.SetActive(false);
         }
     }
     public virtual void OnPointerDown(PointerEventData eventData)
