@@ -1,18 +1,23 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 public class PlayerController : ChrController
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] public int atk;
-
     public static PlayerController Instance { get; private set; }
-    public GameObject TargetMonster { get; set; }
+    public MonsterController TargetMonster { get; set; }
+
+    public bool autoMode { get; set; }
+
+    [SerializeField] public GameObject[] navigationPoint;
+    public int navPointIdx { get; set; } = 0;
 
     protected override void Awake()
     {
         base.Awake();
 
-        if(Instance ==null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -28,17 +33,47 @@ public class PlayerController : ChrController
         ImpactState = new PlayerImpactState(this, stateMachine);
         SkillState = new PlayerSkillState(this, stateMachine);
 
-        stateMachine.AddTransition(IdleState, MoveState, () => InputManager.instance.IsMoving);
-        stateMachine.AddTransition(MoveState, IdleState, () => !InputManager.instance.IsMoving);
+        autoMode = false;
+        nearOpponent = false;
+
+        attackDist = 1.5f;
+        detectDist = 10f;
+
         stateMachine.AddTransition(IdleState, AttackState, () =>
         {
             var closeMonster = GetClosestMonster();
-            if (closeMonster == null) return false;
+            if (!closeMonster) return false;
 
-            var chr = closeMonster.GetComponent<ChrController>();
-            if (chr == null || chr.healthComponent.IsDead) return false;
 
-            return Vector3.Distance(transform.position, closeMonster.transform.position) < 1.5f;
+            float dist = Vector3.Distance(transform.position, closeMonster.transform.position);
+
+            nearOpponent = dist < detectDist;
+
+            return dist < attackDist;
+        });
+
+        stateMachine.AddTransition(IdleState, MoveState, () =>
+        {
+            if (!autoMode)
+                return InputManager.instance.IsMoving;
+            else
+                return true;
+        });
+        stateMachine.AddTransition(MoveState, IdleState, () =>
+        {
+            if (!autoMode)
+                return !InputManager.instance.IsMoving;
+            else
+            {
+                var closeMonster = GetClosestMonster();
+                if (!closeMonster) return false;
+
+                float dist = Vector3.Distance(transform.position, closeMonster.transform.position);
+
+                nearOpponent = dist < detectDist;
+
+                return dist < attackDist;
+            }
         });
 
         stateMachine.SetState(IdleState);
@@ -52,19 +87,20 @@ public class PlayerController : ChrController
     {
         base.Update();
 
+        Debug.Log(stateMachine.currentState);
     }
 
-    public GameObject GetClosestMonster()
+    public MonsterController GetClosestMonster()
     {
-        GameObject closest = null;
+        MonsterController closest = null;
         float minDistance = float.MaxValue;
 
-        foreach (GameObject monster in MonsterPool.Instance.pool)
+        foreach (MonsterController monster in MonsterPool.Instance.pool)
         {
             if (monster == null)
                 continue;
             float distance = Vector3.Distance(transform.position, monster.transform.position);
-            if (distance < minDistance)
+            if (distance < minDistance && !monster.healthComponent.IsDead)
             {
                 minDistance = distance;
                 closest = monster;
@@ -76,23 +112,45 @@ public class PlayerController : ChrController
 
     public void Move()
     {
-        Vector3 camForward = CameraManager.instance.mainCam.transform.forward;
+        if(!autoMode)
+       { Vector3 camForward = CameraManager.instance.mainCam.transform.forward;
         Vector3 camRight = CameraManager.instance.mainCam.transform.right;
         camForward.y = 0f;
         camRight.y = 0f;
         camForward.Normalize();
         camRight.Normalize();
 
-        //Vector3 moveVector = new Vector3(InputManager.instance.MoveInput.x, -10f/moveSpeed, InputManager.instance.MoveInput.y);
         Vector3 moveVector = camForward * InputManager.instance.MoveInput.y + camRight * InputManager.instance.MoveInput.x;
-        characterController.Move(moveVector * moveSpeed* Time.deltaTime);
+        //characterController.Move(moveVector.normalized * moveSpeed* Time.deltaTime);
 
         Vector3 rotateVector = moveVector;
         rotateVector.y = 0f;
 
-        if (InputManager.instance.MoveInput.sqrMagnitude != 0)
+            if (InputManager.instance.MoveInput.sqrMagnitude != 0)
+            {
+                transform.rotation = Quaternion.LookRotation(rotateVector);
+            }
+        }
+        else
         {
-            transform.rotation = Quaternion.LookRotation(rotateVector);
+            if (TargetMonster != null)
+            { 
+                agent.SetDestination(TargetMonster.transform.position);
+                Vector3 next = agent.nextPosition;
+                Vector3 dir = next - transform.position;
+            }
+
+            if (!agent.pathPending && agent.remainingDistance > 0.1f)
+            {
+                Vector3 dir = agent.steeringTarget - transform.position;
+                dir.y = 0f; // Y축 고정 (수직 기울어짐 방지)
+
+                if (dir.sqrMagnitude > 0.001f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(dir);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+                }
+            }
         }
     }
 

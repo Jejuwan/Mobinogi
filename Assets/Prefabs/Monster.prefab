@@ -180,12 +180,11 @@ MonoBehaviour:
   - {fileID: 5386531640138315552}
   mainCamera: {fileID: 0}
   animator: {fileID: 0}
+  agent: {fileID: 0}
   healthComponent: {fileID: 0}
   popupPool: {fileID: 0}
   player: {fileID: 0}
   dissolveDuration: 2
-  chaseRange: 10
-  stopDistance: 1.5
 --- !u!114 &1102306722881829671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bf4cd70e0e9c44ea1f6c5fff6f1bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
+  maxHealth: 300
   IsDead: 0
 --- !u!114 &5951691512432312561
 MonoBehaviour:

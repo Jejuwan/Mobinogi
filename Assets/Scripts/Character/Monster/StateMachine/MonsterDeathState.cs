@@ -12,6 +12,10 @@ public class MonsterDeathState : State
     public override void Enter()
     {
         monster.SetAnimTrigger("Death");
+        if(PlayerController.Instance.TargetMonster == monster)
+        {
+            PlayerController.Instance.TargetMonster = null;
+        }
     }
 
     public override void Tick(float deltaTime)

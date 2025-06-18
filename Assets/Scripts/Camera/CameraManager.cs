@@ -83,7 +83,7 @@ public class CameraManager : MonoBehaviour
     {
         orbit.HorizontalAxis.Value += axis.x;
         orbit.VerticalAxis.Value -= axis.y;
-        orbit.VerticalAxis.Value = Mathf.Clamp(orbit.VerticalAxis.Value, 25f, 75f);
+        orbit.VerticalAxis.Value = Mathf.Clamp(orbit.VerticalAxis.Value, cameraYLimitMin, cameraYLimitMax);
     }
 
 }

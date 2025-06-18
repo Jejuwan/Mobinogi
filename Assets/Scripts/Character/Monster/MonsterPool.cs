@@ -5,7 +5,7 @@ public class MonsterPool : MonoBehaviour
 {
     public static MonsterPool Instance { get; private set; }
 
-    public Queue<GameObject> pool { get; set; }
+    public Queue<MonsterController> pool { get; set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -20,7 +20,7 @@ public class MonsterPool : MonoBehaviour
             return;
         }
 
-        pool = new Queue<GameObject>();
+        pool = new Queue<MonsterController>();
     }
 
     // Update is called once per frame

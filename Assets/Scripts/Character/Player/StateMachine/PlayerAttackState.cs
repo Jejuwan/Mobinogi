@@ -14,14 +14,11 @@ public class PlayerAttackState : State
     {
         player.SetAnimTrigger("Attack");
         PlayerSkillController.Instance.currentActiveSkill = null;
+        player.agent.isStopped = true;
     }
 
     public override void Tick(float deltaTime)
     {
-        ChrController controller = player.TargetMonster.GetComponent<ChrController>();
-        if (controller == null ||  controller.healthComponent.IsDead)
-            return;
-
         if (player.TargetMonster != null)
         {
             Vector3 direction = (player.TargetMonster.transform.position - player.transform.position).normalized;
@@ -43,5 +40,6 @@ public class PlayerAttackState : State
     public override void Exit()
     {
         player.OnDisableCollider(0);
+        player.agent.isStopped = false;
     }
 }

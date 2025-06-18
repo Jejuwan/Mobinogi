@@ -17,11 +17,6 @@ public class PlayerMoveState : State
     public override void Tick(float deltaTime)
     {
         player.Move();
-
-        if (!InputManager.instance.IsMoving)
-        {
-            stateMachine.SetState(player.IdleState);
-        }
     }
     public override void Exit()
     {

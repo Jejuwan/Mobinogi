@@ -62,6 +62,8 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
             {
                 if (!isDragging)
                 {
+                    if (EventSystem.current.IsPointerOverGameObject())
+                        return;
                     lastPosition = currentPos;
                     isDragging = true;
                     currentInputMode = InputMode.View;
@@ -80,6 +82,8 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
             {
                 if (!isDragging)
                 {
+                    if (EventSystem.current.IsPointerOverGameObject())
+                        return;
                     isDragging = true;
                     joystick.transform.position = currentPos;
                     joystick.gameObject.SetActive(true);

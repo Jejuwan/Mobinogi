@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
-    [SerializeField] public int maxHealth { get; set; } = 10000;
+    [SerializeField] public int maxHealth = 300;
     public int currentHealth { get; set; }
     public bool IsDead;
 
@@ -12,8 +12,13 @@ public class HealthComponent : MonoBehaviour
 
     private void Awake()
     {
-        currentHealth = maxHealth;
         IsDead = false;
+        currentHealth = maxHealth;
+    }
+
+    private void Start()
+    {
+
     }
 
     public void TakeDamage(int damage)

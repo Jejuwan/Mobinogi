@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ChrController : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class ChrController : MonoBehaviour
 
     public Animator animator;
     protected CharacterController characterController;
+    public NavMeshAgent agent;
 
     public StateMachine stateMachine;
     public HealthComponent healthComponent;
@@ -16,6 +18,10 @@ public class ChrController : MonoBehaviour
     public State ImpactState { get; set; }
     public State DeathState { get; set; }
     public State SkillState { get; set; }
+
+    public bool nearOpponent { get; set; }
+    public float detectDist { get; set; }
+    public float attackDist { get; set; }
 
     protected virtual void Awake()
     {
@@ -30,6 +36,10 @@ public class ChrController : MonoBehaviour
                 col.enabled = false;
             }
         };
+        agent = GetComponent<NavMeshAgent>();
+        agent.updatePosition = true;
+        agent.updateRotation = false;
+
         stateMachine = new StateMachine();
     }
 
@@ -41,8 +51,12 @@ public class ChrController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (healthComponent.IsDead)
+            return;
+
         stateMachine.Tick(Time.deltaTime);
-        characterController.Move(new Vector3(0, -9.8f*Time.deltaTime, 0));
+
+           
     }
 
     public void SetAnimBool(string name, bool value)

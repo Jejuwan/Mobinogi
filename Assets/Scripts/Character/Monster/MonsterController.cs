@@ -4,28 +4,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class MonsterController : ChrController
 {
     [SerializeField] private DamagePopupPool popupPool;
     [SerializeField]public GameObject player;
     [SerializeField] private float dissolveDuration = 2f;
 
-    public float chaseRange = 10f;    
-    public float stopDistance = 1.5f;
-    public bool nearPlayer { get; set; }
-
-    private NavMeshAgent agent;
     private Material material;
 
     protected override void Awake()
     {
         base.Awake();
-
-        agent = GetComponent<NavMeshAgent>();
-
-        agent.updatePosition = false;
-        agent.updateRotation = false;
 
         material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
@@ -35,8 +24,20 @@ public class MonsterController : ChrController
         ImpactState = new MonsterImpactState(this, stateMachine);
         DeathState = new MonsterDeathState(this, stateMachine);
 
-        stateMachine.AddTransition(IdleState, MoveState, () => !nearPlayer);
-        stateMachine.AddTransition(MoveState, AttackState, () => nearPlayer);
+        nearOpponent = false;
+
+        attackDist = 1.5f;
+        detectDist = 5f;
+        
+
+        stateMachine.AddTransition(IdleState, MoveState, () =>
+        {
+            return Vector3.Distance(transform.position, player.transform.position) <= detectDist;
+        });
+        stateMachine.AddTransition(MoveState, AttackState, () =>
+        {
+            return Vector3.Distance(transform.position, player.transform.position) <= attackDist;
+        });
 
         stateMachine.SetState(IdleState);
     }
@@ -45,30 +46,14 @@ public class MonsterController : ChrController
     {
         base.Start();
 
-        MonsterPool.Instance.pool.Enqueue(this.gameObject);
+        MonsterPool.Instance.pool.Enqueue(this);
     }
 
     protected override void Update()
     {
         base.Update();
-
-        ScanPlayer();
-    }
-
-    public void ScanPlayer()
-    {
-        if (player == null) return;
-
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-
-        if (distance <= chaseRange && distance > stopDistance)
-        {
-            nearPlayer = false;
-        }
-        else if (distance <= stopDistance)
-        {
-            nearPlayer = true;
-        }
+        if(!healthComponent.IsDead)
+            characterController.Move(new Vector3(0, -9.8f * Time.deltaTime, 0));
     }
 
     public void Move()
