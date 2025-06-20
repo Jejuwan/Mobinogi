@@ -72064,6 +72064,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 1
     messageOptions: 0
+  - time: 0.51666665
+    functionName: OnEnableCollider
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6166667
     functionName: OnBladeSmash
     data: 
@@ -72071,14 +72078,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6333333
-    functionName: OnEnableCollider
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.2
+  - time: 0.98333335
     functionName: OnDisableCollider
     data: 
     objectReferenceParameter: {fileID: 0}

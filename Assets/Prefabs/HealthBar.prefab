@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthBarUI
   healthSlider: {fileID: 9072113248356791259}
   easeHealthSlider: {fileID: 6014150414609714550}
-  playerController: {fileID: 0}
+  chrController: {fileID: 0}
   lerpSpeed: 0.05
 --- !u!114 &9072113248356791259
 MonoBehaviour:

@@ -1,13 +1,18 @@
 using System.Collections;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class MonsterController : ChrController
 {
     [SerializeField] private DamagePopupPool popupPool;
-    [SerializeField]public GameObject player;
+    [SerializeField] public TextMeshProUGUI nameTag;
+    [SerializeField] public HealthBarUI healthBarUI;
+    [SerializeField] public GameObject player;
     [SerializeField] private float dissolveDuration = 2f;
 
     private Material material;
@@ -16,6 +21,10 @@ public class MonsterController : ChrController
     {
         base.Awake();
 
+        healthComponent.OnDeath += () =>
+        {
+            nameTag.enabled = false;
+        };
         material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
         IdleState = new MonsterIdleState(this, stateMachine);
@@ -27,8 +36,7 @@ public class MonsterController : ChrController
         nearOpponent = false;
 
         attackDist = 1.5f;
-        detectDist = 5f;
-        
+        detectDist = 10f;
 
         stateMachine.AddTransition(IdleState, MoveState, () =>
         {
@@ -47,13 +55,17 @@ public class MonsterController : ChrController
         base.Start();
 
         MonsterPool.Instance.pool.Enqueue(this);
+
+        nameTag.enabled = false;
+        healthBarUI.gameObject.SetActive(false);
     }
 
     protected override void Update()
     {
         base.Update();
-        if(!healthComponent.IsDead)
-            characterController.Move(new Vector3(0, -9.8f * Time.deltaTime, 0));
+        if (healthComponent.IsDead)
+            stateMachine.SetState(DeathState);
+     
     }
 
     public void Move()
@@ -65,7 +77,7 @@ public class MonsterController : ChrController
         Vector3 direction = (player.transform.position - transform.position).normalized;
         Vector3 velocity = direction * agent.speed;
 
-        characterController.Move(velocity * Time.deltaTime);
+        //characterController.Move(velocity * Time.deltaTime);
 
         LookController(player.transform, 10f);
     }

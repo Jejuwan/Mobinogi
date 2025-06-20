@@ -1,0 +1,18 @@
+{
+    "asset": "6931e9a4e1b8cc0448e95b4b94d8d71f",
+    "fileName": "01978894-fd17-7632-88e7-e7e8b21daf8e.jpg",
+    "prompt": "Create a horizontal health bar UI element with rounded corners. The bar should have a smooth gradient that transitions from green on the left to blue on the right. It should be suitable for use as a fillable 9-sliced sprite in Unity. The background should be transparent.\r",
+    "negativePrompt": "",
+    "model": "03d5ab0c-51c5-44a0-ba07-822e93561aca",
+    "customSeed": -1,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

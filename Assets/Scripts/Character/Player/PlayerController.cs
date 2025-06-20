@@ -86,8 +86,6 @@ public class PlayerController : ChrController
     protected override void Update()
     {
         base.Update();
-
-        Debug.Log(stateMachine.currentState);
     }
 
     public MonsterController GetClosestMonster()
