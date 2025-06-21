@@ -7,7 +7,8 @@ public class HealthComponent : MonoBehaviour
     public int currentHealth { get; set; }
     public bool IsDead;
 
-    public event Action<int, int> OnHealthChanged;
+    public event Action<int, int> OnHealthDamaged;
+    public event Action<int, int> OnHealthHealed;
     public event Action OnDeath;
 
     private void Awake()
@@ -18,13 +19,17 @@ public class HealthComponent : MonoBehaviour
 
     private void Start()
     {
-
+        OnHealthHealed += (currentHealth, maxHealth) =>
+        {
+            EffectManager eff = EffectManager.Instance;
+            eff.ShowAndDestroyEffect(eff.healPrefab, eff.healEffect, PlayerController.Instance.transform.position, Quaternion.identity, .5f);
+        };
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth = Mathf.Max(currentHealth - damage, 0);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        OnHealthDamaged?.Invoke(currentHealth, maxHealth);
         IsDead = currentHealth <= 0;
 
         if (IsDead)
@@ -37,6 +42,6 @@ public class HealthComponent : MonoBehaviour
     {
         if (IsDead) return;
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        OnHealthHealed?.Invoke(currentHealth, maxHealth);
     }
 }

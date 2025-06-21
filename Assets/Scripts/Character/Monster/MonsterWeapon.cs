@@ -21,7 +21,7 @@ public class MonsterWeapon : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController player = other.GetComponent<PlayerController>();
-            if (player != null)
+            if (player != null && !player.immortal)
             {
                 player.healthComponent.TakeDamage(10);
             }

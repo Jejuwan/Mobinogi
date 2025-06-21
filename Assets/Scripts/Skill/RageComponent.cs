@@ -4,7 +4,7 @@ using UnityEngine;
 public class RageComponent : MonoBehaviour
 {
     public int currentRage { get; set; }
-    public int maxRage = 100;
+    public int maxRage = 200;
 
     public event Action<int, int> OnRageChanged;
 
@@ -21,7 +21,7 @@ public class RageComponent : MonoBehaviour
 
         if (IsMax)
         {
-           PlayerEffectController.Instance.ShowEffect(PlayerEffectController.Instance.rageEffectPrefab, PlayerEffectController.Instance.rageEffect,
+           EffectManager.Instance.ShowEffect(EffectManager.Instance.rageEffectPrefab, EffectManager.Instance.rageEffect,
             PlayerController.Instance.transform.position, Quaternion.identity, .7f);
             UIController.Instance.ShowRageUI();
         }
@@ -29,10 +29,11 @@ public class RageComponent : MonoBehaviour
 
     public void ConsumeRage()
     {
-        PlayerEffectController.Instance.DestroyEffect(PlayerEffectController.Instance.rageEffect);
+        EffectManager.Instance.DestroyEffect(EffectManager.Instance.rageEffect);
         UIController.Instance.DestroyRageUI();
         PlayerSkillController.Instance.currentActiveSkill.raged = false;
         currentRage = 0;
         OnRageChanged?.Invoke(currentRage, maxRage);
+        PlayerController.Instance.healthComponent.Heal(20);
     }
 }

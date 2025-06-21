@@ -9,6 +9,7 @@ public class PlayerController : ChrController
     public MonsterController TargetMonster { get; set; }
 
     public bool autoMode { get; set; }
+    public bool immortal { get; set; }
 
     [SerializeField] public GameObject[] navigationPoint;
     public int navPointIdx { get; set; } = 0;
@@ -35,6 +36,7 @@ public class PlayerController : ChrController
 
         autoMode = false;
         nearOpponent = false;
+        immortal = false;
 
         attackDist = 1.5f;
         detectDist = 10f;
@@ -161,5 +163,6 @@ public class PlayerController : ChrController
     public void SetIdleState()
     {
         stateMachine.SetState(IdleState);
+        immortal = false;
     }
 }

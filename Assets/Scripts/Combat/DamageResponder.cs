@@ -13,7 +13,7 @@ public class DamageResponder : MonoBehaviour
         health = GetComponent<HealthComponent>();
         if (health != null)
         {
-            health.OnHealthChanged += OnDamaged;
+            health.OnHealthDamaged += OnDamaged;
             //health.OnDeath += OnDeath;
         }
     }

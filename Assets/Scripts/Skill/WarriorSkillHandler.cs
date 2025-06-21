@@ -43,12 +43,12 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
     {
         if (rage.IsMax)
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.swordTrailRagePrefab, PlayerEffectController.Instance.swordTrailRageEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.swordTrailRagePrefab, EffectManager.Instance.swordTrailRageEffect,
                 PlayerController.Instance.transform.position + Vector3.up, Quaternion.Euler(90f, 0, 0), 2f);
         }
         else
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.swordTrailPrefab, PlayerEffectController.Instance.swordTrailEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.swordTrailPrefab, EffectManager.Instance.swordTrailEffect,
                 PlayerController.Instance.transform.position + Vector3.up, Quaternion.Euler(90f, 0, 0), 1f);
         }
         UseSkill();
@@ -58,12 +58,12 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
     {
         if (rage.IsMax)
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.shieldBashRagePrefab, PlayerEffectController.Instance.shieldBashRageEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.shieldBashRagePrefab, EffectManager.Instance.shieldBashRageEffect,
                PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
         }
         else
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.shieldBashPrefab, PlayerEffectController.Instance.shieldBashEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.shieldBashPrefab, EffectManager.Instance.shieldBashEffect,
                PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
         }
         UseSkill();
@@ -73,13 +73,13 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
     {
         if (rage.IsMax)
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.kickRagePrefab, PlayerEffectController.Instance.kickRageEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.kickRagePrefab, EffectManager.Instance.kickRageEffect,
                 PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
 
         }
         else
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.kickPrefab, PlayerEffectController.Instance.kickEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.kickPrefab, EffectManager.Instance.kickEffect,
                 PlayerController.Instance.transform.position + Vector3.up + PlayerController.Instance.transform.forward, Quaternion.identity, 1f);
         }
         UseSkill();
@@ -89,12 +89,12 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
     {
         if (rage.IsMax)
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.TauntRagePrefab, PlayerEffectController.Instance.tauntRageEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.TauntRagePrefab, EffectManager.Instance.tauntRageEffect,
                PlayerController.Instance.transform.position + Vector3.up, Quaternion.identity, 1f);
         }
         else
         {
-            PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.TauntPrefab, PlayerEffectController.Instance.tauntEffect,
+            EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.TauntPrefab, EffectManager.Instance.tauntEffect,
                PlayerController.Instance.transform.position + Vector3.up, Quaternion.identity, 1f);
         }
         UseSkill();
@@ -109,7 +109,7 @@ public class WarriorSkillHandler : MonoBehaviour, IJobSkillHandler
     {
         Quaternion rotation = Quaternion.AngleAxis(-30f, Vector3.up);
         Vector3 vec = rotation * PlayerController.Instance.transform.forward;
-        PlayerEffectController.Instance.ShowAndDestroyEffect(PlayerEffectController.Instance.bladeImpactPrefab, PlayerEffectController.Instance.bladeImpactEffect,
+        EffectManager.Instance.ShowAndDestroyEffect(EffectManager.Instance.bladeImpactPrefab, EffectManager.Instance.bladeImpactEffect,
               PlayerController.Instance.transform.position + vec * 2f, Quaternion.identity, 3f);
         AudioController.Instance.PlaySound(PlayerSkillController.Instance.currentActiveSkill.sound);
        

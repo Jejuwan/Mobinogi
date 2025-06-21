@@ -24,7 +24,8 @@ public class HealthBarUI : MonoBehaviour
 
     public void Bind(HealthComponent health)
     {
-        health.OnHealthChanged += UpdateUI;
+        health.OnHealthDamaged += UpdateUI;
+        health.OnHealthHealed += UpdateUI;
         health.OnDeath += Destroy;
         UpdateUI(health.currentHealth, health.maxHealth);
     }

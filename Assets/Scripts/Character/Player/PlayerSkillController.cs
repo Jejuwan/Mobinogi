@@ -63,6 +63,7 @@ public class PlayerSkillController : MonoBehaviour
             {
                 currentActiveSkill = skill;
                 skillHandler.TryUseSkill(skill);
+                PlayerController.Instance.immortal = true;
             }
         }
     }
@@ -139,5 +140,11 @@ public class PlayerSkillController : MonoBehaviour
     public void OnBladeImpact()
     {
         skillHandler.BladeImpact();
+        skillHandler.rage.GainRage(skillHandler.rage.maxRage);
+    }
+
+    public void OnAddRage(int val)
+    {
+        skillHandler.rage.GainRage(val);
     }
 }
