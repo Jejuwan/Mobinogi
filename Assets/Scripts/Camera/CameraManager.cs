@@ -23,11 +23,11 @@ public class CameraManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.root.gameObject);
 
         cameraYLimitMin = 25f;
         cameraYLimitMax = 75f;

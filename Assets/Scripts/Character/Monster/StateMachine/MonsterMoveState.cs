@@ -14,7 +14,8 @@ public class MonsterMoveState : State
         monster.SetAnimBool("isWalking", true);
         if (monster.nameTag != null)
             monster.nameTag.enabled = true;
-        monster.healthBarUI.gameObject.SetActive(true);
+        if (monster.healthBarUI != null)
+            monster.healthBarUI.gameObject.SetActive(true);
     }
 
     public override void Tick(float deltaTime)

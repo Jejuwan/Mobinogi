@@ -3,18 +3,38 @@ Shader "UI/Grayscale"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Color ("Tint", Color) = (1,1,1,1)
+
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+
+        _ColorMask ("Color Mask", Float) = 15
     }
 
     SubShader
     {
-        Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
-        LOD 100
+        Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"
+               "PreviewType"="Plane" "CanUseSpriteAtlas"="True" }
 
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha
+            Stencil
+            {
+                Ref [_Stencil]
+                Comp [_StencilComp]
+                Pass [_StencilOp]
+                ReadMask [_StencilReadMask]
+                WriteMask [_StencilWriteMask]
+            }
+
+            ColorMask [_ColorMask]
             Cull Off
+            Lighting Off
             ZWrite Off
+            Blend SrcAlpha OneMinusSrcAlpha
 
             CGPROGRAM
             #pragma vertex vert
@@ -34,6 +54,7 @@ Shader "UI/Grayscale"
             };
 
             sampler2D _MainTex;
+            fixed4 _Color;
 
             v2f vert (appdata_t v)
             {
@@ -45,7 +66,7 @@ Shader "UI/Grayscale"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.texcoord);
+                fixed4 col = tex2D(_MainTex, i.texcoord) * _Color;
                 float gray = dot(col.rgb, float3(0.299, 0.587, 0.114));
                 return fixed4(gray, gray, gray, col.a);
             }

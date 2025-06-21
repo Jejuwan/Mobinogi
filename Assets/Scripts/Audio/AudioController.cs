@@ -9,11 +9,11 @@ public class AudioController : MonoBehaviour
     {
         if(Instance != null)
         {
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.root.gameObject);
 
         audioSource = GetComponent<AudioSource>();
     }

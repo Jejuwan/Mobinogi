@@ -29,11 +29,11 @@ public class InputManager : MonoBehaviour,IPointerDownHandler
     {
         if(instance!=null)
         {
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.root.gameObject);
 
         isDragging = false;
         inputActions = new PlayerInputActions();
