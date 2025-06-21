@@ -12,7 +12,8 @@ public class MonsterMoveState : State
     public override void Enter()
     {
         monster.SetAnimBool("isWalking", true);
-        monster.nameTag.enabled = true;
+        if (monster.nameTag != null)
+            monster.nameTag.enabled = true;
         monster.healthBarUI.gameObject.SetActive(true);
     }
 

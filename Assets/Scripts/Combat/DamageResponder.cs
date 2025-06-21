@@ -22,8 +22,9 @@ public class DamageResponder : MonoBehaviour
     {
         if (hitEffect != null)
         {
-            var effect = Instantiate(hitEffect, transform.position + Vector3.up * 1.5f, Quaternion.identity);
-            effect.transform.localScale = Vector3.one * 0.5f;
+            Vector3 randomOffset = Random.insideUnitSphere * .3f; // radius
+            var effect = Instantiate(hitEffect, transform.position + Vector3.up * 1.5f + randomOffset, Quaternion.identity);
+            effect.transform.localScale = Vector3.one * 0.1f;
             effect.Play();
             Destroy(effect.gameObject, effect.main.duration + 0.5f);
         }

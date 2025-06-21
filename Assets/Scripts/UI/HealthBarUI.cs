@@ -10,7 +10,8 @@ public class HealthBarUI : MonoBehaviour
 
     public void Start()
     {
-        Bind(chrController.healthComponent);
+        if(chrController!=null)
+            Bind(chrController.healthComponent);
     }
 
     public void Update()
