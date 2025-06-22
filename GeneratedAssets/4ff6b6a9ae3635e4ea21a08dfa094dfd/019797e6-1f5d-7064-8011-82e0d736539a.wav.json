@@ -1,0 +1,11 @@
+{
+    "asset": "f9b2aae207d77e24baee4f868596c4fa",
+    "fileName": "019797e6-1f5d-7064-8011-82e0d736539a.wav",
+    "prompt": "Slow, heavy mechanical sound for skill casting, like loading a large weapon with deep metallic clunks and tension",
+    "negativePrompt": "",
+    "model": "0ee39b33-2893-4e0f-8c46-0e0bdd4eda85",
+    "customSeed": -1,
+    "duration": 1.0,
+    "autoTrim": true,
+    "hasReference": false
+}

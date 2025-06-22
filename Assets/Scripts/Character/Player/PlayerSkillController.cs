@@ -7,6 +7,7 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] public CastingBarUI castingIcon;
     [SerializeField] public GameObject castingBar;
     [SerializeField] public WarriorSkillHandler skillHandler;
+    [SerializeField] public AudioClip castingSound;
 
     public static PlayerSkillController Instance;
     public ActiveSkill currentActiveSkill { get; set; }
@@ -91,6 +92,7 @@ public class PlayerSkillController : MonoBehaviour
         if (skill.casting && !skill.raged)
         {
             PlayerController.Instance.animator.speed = 0f;
+            AudioController.Instance.PlaySound(castingSound);
             float elapsed = 0f;
             while (elapsed < skill.castingTime)
             {

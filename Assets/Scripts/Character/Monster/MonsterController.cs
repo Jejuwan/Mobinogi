@@ -9,10 +9,9 @@ using TMPro;
 
 public class MonsterController : ChrController
 {
-    [SerializeField] private DamagePopupPool popupPool;
     [SerializeField] public TextMeshProUGUI nameTag;
     [SerializeField] public HealthBarUI healthBarUI;
-    [SerializeField] public GameObject player;
+
     [SerializeField] private float dissolveDuration = 2f;
 
     private Material material;
@@ -27,27 +26,10 @@ public class MonsterController : ChrController
         };
         material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
-        IdleState = new MonsterIdleState(this, stateMachine);
-        MoveState = new MonsterMoveState(this, stateMachine);
-        AttackState = new MonsterAttackState(this, stateMachine);
-        ImpactState = new MonsterImpactState(this, stateMachine);
-        DeathState = new MonsterDeathState(this, stateMachine);
-
         nearOpponent = false;
 
         attackDist = 1.5f;
         detectDist = 10f;
-
-        stateMachine.AddTransition(IdleState, MoveState, () =>
-        {
-            return Vector3.Distance(transform.position, player.transform.position) <= detectDist;
-        });
-        stateMachine.AddTransition(MoveState, AttackState, () =>
-        {
-            return Vector3.Distance(transform.position, player.transform.position) <= attackDist;
-        });
-
-        stateMachine.SetState(IdleState);
     }
 
     protected override void Start()
@@ -70,16 +52,12 @@ public class MonsterController : ChrController
 
     public void Move()
     {
-        if (player == null) return;
+        agent.SetDestination(PlayerController.Instance.transform.position);
 
-        agent.SetDestination(player.transform.position);
-
-        Vector3 direction = (player.transform.position - transform.position).normalized;
+        Vector3 direction = (PlayerController.Instance.transform.position - transform.position).normalized;
         Vector3 velocity = direction * agent.speed;
 
-        //characterController.Move(velocity * Time.deltaTime);
-
-        LookController(player.transform, 10f);
+        LookController(PlayerController.Instance.transform, 10f);
     }
 
     public void Stop()
@@ -99,7 +77,7 @@ public class MonsterController : ChrController
 
     public void OnDamaged(int damage)
     {
-        popupPool.ShowDamage(transform.position, damage, mainCamera);
+        DamagePopupPool.instance.ShowDamage(transform.position, damage, Camera.main);
     }
     private IEnumerator DissolveCoroutine()
     {

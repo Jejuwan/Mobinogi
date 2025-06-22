@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 
 public class DamagePopupPool : MonoBehaviour
@@ -7,10 +8,20 @@ public class DamagePopupPool : MonoBehaviour
     [SerializeField] private Canvas uiCanvas;
     [SerializeField] private int poolSize = 20;
 
+    public static DamagePopupPool instance { get; set; }
+
     private readonly Queue<DamagePopup> pool = new Queue<DamagePopup>();
 
     private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(transform.root.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(transform.root.gameObject);
+
         for (int i = 0; i < poolSize; i++)
         {
             GameObject go = Instantiate(popupPrefab, uiCanvas.transform);

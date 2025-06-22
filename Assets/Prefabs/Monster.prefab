@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4358661796626483249}
   - component: {fileID: 6805911919796763720}
-  - component: {fileID: 2639860274284872459}
+  - component: {fileID: 6378385973225306016}
   - component: {fileID: 1102306722881829671}
   - component: {fileID: 5951691512432312561}
   - component: {fileID: 1475588749455053213}
@@ -165,7 +165,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2639860274284872459
+--- !u!114 &6378385973225306016
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,19 +174,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5161508310302999513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b600bbd551a82934f9befabf604fa9a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 473ed83eb8c2b31408f75a21e827bc5d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MonsterController
+  m_EditorClassIdentifier: Assembly-CSharp::GoblinController
   attackColliders:
   - {fileID: 5386531640138315552}
-  mainCamera: {fileID: 0}
   animator: {fileID: 0}
   agent: {fileID: 0}
   healthComponent: {fileID: 0}
-  popupPool: {fileID: 0}
   nameTag: {fileID: 7509863329574235760}
   healthBarUI: {fileID: 6671258831316874002}
-  player: {fileID: 0}
   dissolveDuration: 2
 --- !u!114 &1102306722881829671
 MonoBehaviour:
@@ -1103,7 +1100,7 @@ PrefabInstance:
     - target: {fileID: 3454519518795087998, guid: d4c2ec29189975d4db93356954b44894, type: 3}
       propertyPath: chrController
       value: 
-      objectReference: {fileID: 2639860274284872459}
+      objectReference: {fileID: 6378385973225306016}
     - target: {fileID: 3470294883071098302, guid: d4c2ec29189975d4db93356954b44894, type: 3}
       propertyPath: m_Name
       value: MonsterHealthBar

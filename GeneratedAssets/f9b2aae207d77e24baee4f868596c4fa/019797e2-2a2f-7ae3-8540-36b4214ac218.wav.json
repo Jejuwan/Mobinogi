@@ -1,0 +1,11 @@
+{
+    "asset": "f9b2aae207d77e24baee4f868596c4fa",
+    "fileName": "019797e2-2a2f-7ae3-8540-36b4214ac218.wav",
+    "prompt": "A heavy, impactful sound for a powerful skill casting",
+    "negativePrompt": "",
+    "model": "0ee39b33-2893-4e0f-8c46-0e0bdd4eda85",
+    "customSeed": -1,
+    "duration": 1.0,
+    "autoTrim": true,
+    "hasReference": false
+}

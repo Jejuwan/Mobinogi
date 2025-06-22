@@ -4,10 +4,8 @@ using UnityEngine.AI;
 public class ChrController : MonoBehaviour
 {
     [SerializeField] public GameObject[] attackColliders;
-    [SerializeField] protected Camera mainCamera;
 
     public Animator animator;
-    protected CharacterController characterController;
     public NavMeshAgent agent;
 
     public StateMachine stateMachine;
@@ -25,22 +23,7 @@ public class ChrController : MonoBehaviour
 
     protected virtual void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
-        healthComponent = GetComponent<HealthComponent>();
-        healthComponent.OnDeath += () =>
-        {
-            Collider[] colliders = this.gameObject.GetComponentsInChildren<Collider>();
-            foreach (Collider col in colliders)
-            {
-                col.enabled = false;
-            }
-        };
-        agent = GetComponent<NavMeshAgent>();
-        agent.updatePosition = true;
-        agent.updateRotation = false;
-
-        stateMachine = new StateMachine();
+        Init();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -57,6 +40,25 @@ public class ChrController : MonoBehaviour
         stateMachine.Tick(Time.deltaTime);
 
            
+    }
+
+    public virtual void Init()
+    {
+        animator = GetComponent<Animator>();
+        healthComponent = GetComponent<HealthComponent>();
+        healthComponent.OnDeath += () =>
+        {
+            Collider[] colliders = this.gameObject.GetComponentsInChildren<Collider>();
+            foreach (Collider col in colliders)
+            {
+                col.enabled = false;
+            }
+        };
+        agent = GetComponent<NavMeshAgent>();
+        agent.updatePosition = true;
+        agent.updateRotation = false;
+
+        stateMachine = new StateMachine();
     }
 
     public void SetAnimBool(string name, bool value)

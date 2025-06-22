@@ -49,7 +49,6 @@ public class EffectManager : MonoBehaviour
         if (healEffect != null)
         {
             healEffect.transform.position = PlayerController.Instance.transform.position;
-            Debug.Log("ASDD");
         }
     }
 
