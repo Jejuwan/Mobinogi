@@ -52,14 +52,16 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    public void ShowEffect(ParticleSystem inPs, ParticleSystem outPs, Vector3 pos, Quaternion quat, float localSize)
+    public ParticleSystem ShowEffect(ParticleSystem inPs, ParticleSystem outPs, Vector3 pos, Quaternion quat, float localSize)
     {
         if (inPs != null)
         {
             outPs = Instantiate(inPs, pos, quat);
             outPs.transform.localScale = Vector3.one * localSize;
             outPs.Play();
+            return outPs;
         }
+        return null;
     }
 
     public void DestroyEffect(ParticleSystem outPos)
