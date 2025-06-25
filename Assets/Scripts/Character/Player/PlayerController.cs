@@ -112,19 +112,20 @@ public class PlayerController : ChrController
 
     public void Move()
     {
-        if(!autoMode)
-       { Vector3 camForward = CameraManager.instance.mainCam.transform.forward;
-        Vector3 camRight = CameraManager.instance.mainCam.transform.right;
-        camForward.y = 0f;
-        camRight.y = 0f;
-        camForward.Normalize();
-        camRight.Normalize();
+        if (!autoMode)
+        {
+            Vector3 camForward = CameraManager.instance.mainCam.transform.forward;
+            Vector3 camRight = CameraManager.instance.mainCam.transform.right;
+            camForward.y = 0f;
+            camRight.y = 0f;
+            camForward.Normalize();
+            camRight.Normalize();
 
-        Vector3 moveVector = camForward * InputManager.instance.MoveInput.y + camRight * InputManager.instance.MoveInput.x;
-        //characterController.Move(moveVector.normalized * moveSpeed* Time.deltaTime);
+            Vector3 moveVector = camForward * InputManager.instance.MoveInput.y + camRight * InputManager.instance.MoveInput.x;
+            agent.SetDestination(transform.position + moveVector);
 
-        Vector3 rotateVector = moveVector;
-        rotateVector.y = 0f;
+            Vector3 rotateVector = moveVector;
+            rotateVector.y = 0f;
 
             if (InputManager.instance.MoveInput.sqrMagnitude != 0)
             {

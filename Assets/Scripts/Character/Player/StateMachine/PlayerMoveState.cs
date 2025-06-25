@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMoveState : State
 {
@@ -20,5 +21,7 @@ public class PlayerMoveState : State
     }
     public override void Exit()
     {
+        player.agent.isStopped = true;
+        player.agent.ResetPath();
     }
 }
