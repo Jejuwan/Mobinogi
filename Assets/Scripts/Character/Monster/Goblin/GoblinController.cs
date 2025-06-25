@@ -5,11 +5,14 @@ public class GoblinController : MonsterController
     protected override void Awake()
     {
         base.Awake();
-        IdleState = new MonsterIdleState(this, stateMachine);
-        MoveState = new MonsterMoveState(this, stateMachine);
-        AttackState = new MonsterAttackState(this, stateMachine);
-        ImpactState = new MonsterImpactState(this, stateMachine);
-        DeathState = new MonsterDeathState(this, stateMachine);
+        IdleState = new GoblinIdleState(this, stateMachine);
+        MoveState = new GoblinMoveState(this, stateMachine);
+        AttackState = new GoblinAttackState(this, stateMachine);
+        ImpactState = new GoblinImpactState(this, stateMachine);
+        DeathState = new GoblinDeathState(this, stateMachine);
+
+        attackDist = 1.5f;
+        detectDist = 10f;
 
         stateMachine.AddTransition(IdleState, MoveState, () =>
         {

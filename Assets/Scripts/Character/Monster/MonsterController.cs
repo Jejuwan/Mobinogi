@@ -28,8 +28,6 @@ public class MonsterController : ChrController
 
         nearOpponent = false;
 
-        attackDist = 1.5f;
-        detectDist = 10f;
     }
 
     protected override void Start()
