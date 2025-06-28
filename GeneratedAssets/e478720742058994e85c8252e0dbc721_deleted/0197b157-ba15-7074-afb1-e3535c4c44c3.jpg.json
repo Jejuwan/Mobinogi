@@ -1,0 +1,18 @@
+{
+    "asset": "e478720742058994e85c8252e0dbc721",
+    "fileName": "0197b157-ba15-7074-afb1-e3535c4c44c3.jpg",
+    "prompt": "Red fan-shaped sector on a transparent background, smooth radial gradient from red center to transparent outer edge, 30 degrees angle, clean and soft edges, digital 2D illustration",
+    "negativePrompt": "",
+    "model": "03d5ab0c-51c5-44a0-ba07-822e93561aca",
+    "customSeed": -1,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}
