@@ -25,7 +25,6 @@ public class AOESkill : MonoBehaviour
     {
         hitCollider = GetComponent<Collider>();
         hitCollider.enabled = false;
-        currentHitCoolTime = hitCoolTime;
     }
     protected virtual void Start()
     {

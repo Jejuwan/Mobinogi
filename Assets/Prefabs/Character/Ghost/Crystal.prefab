@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.631323, y: 0.31848288, z: -0.31848288, w: 0.631323}
   m_LocalPosition: {x: 1.52, y: -4.58, z: 33.66}
-  m_LocalScale: {x: 2.9638073, y: 2.963808, z: 2.963808}
+  m_LocalScale: {x: 3.1614532, y: 3.1614537, z: 3.1614537}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3409172678302857206}
@@ -55,9 +55,9 @@ MonoBehaviour:
   skillEffect: {fileID: 0}
   effectPosOffset: {x: 0, y: 0, z: 0}
   effectRotOffset: {x: -90, y: 70, z: 0}
-  effectScale: 0.5
+  effectScale: 0.7
   dmg: 33
-  hitCoolTime: 0
+  hitCoolTime: 5
   startValue: 0.5
   currentHitCoolTime: 0
   hitCollider: {fileID: 9137253310562900546}

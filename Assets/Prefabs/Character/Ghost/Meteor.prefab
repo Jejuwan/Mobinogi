@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2378102807742210313}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
@@ -162,12 +162,16 @@ MonoBehaviour:
   indicatorMat: {fileID: 2100000, guid: a518f26b49d8f664eb692459b38fce18, type: 2}
   readyDuration: 6
   duration: 4
-  fadeDuration: 1
   skillEffectPrefab: {fileID: 8176230078092200170, guid: d017be6c514cb7d49940283c3cb20e88, type: 3}
   skillEffect: {fileID: 0}
+  effectPosOffset: {x: 0, y: 0, z: 0}
+  effectRotOffset: {x: 0, y: 0, z: 0}
   effectScale: 1
   dmg: 3
   hitCoolTime: 0.5
+  startValue: 0
+  currentHitCoolTime: 0
+  hitCollider: {fileID: 0}
 --- !u!135 &8778931275610470154
 SphereCollider:
   m_ObjectHideFlags: 0

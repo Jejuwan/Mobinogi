@@ -18,7 +18,7 @@ public class PlayerWeapon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 몬스터 태그로 판별하거나 컴포넌트로 판별
-        if (other.CompareTag("Monster"))
+        if (other.CompareTag("Monster") || other.CompareTag("Boss"))
         {
             MonsterController monster = other.GetComponent<MonsterController>();
             if (monster != null)
@@ -31,10 +31,10 @@ public class PlayerWeapon : MonoBehaviour
 
                     monster.healthComponent.TakeDamage(dmg);
                     monster.OnDamaged(dmg);
-                    monster.SetState(monster.ImpactState);
+                    if(other.CompareTag("Monster"))
+                        monster.SetState(monster.ImpactState);
                 }
             }
         }
     }
-
 }
