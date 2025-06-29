@@ -58,7 +58,6 @@ public class GhostController : MonsterController
         Vector3 direction = PlayerController.Instance.transform.position - transform.position;
         direction.y = 0f; // 수직 방향 무시 (XZ 평면 기준)
         float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        Debug.Log(angle);
         Quaternion quat = new Quaternion(0.63132298f, 0.318482876f, -0.318482876f, 0.63132298f);
         Quaternion zRotation = Quaternion.Euler(0f, 0f, -angle -150f);
         quat *= zRotation;

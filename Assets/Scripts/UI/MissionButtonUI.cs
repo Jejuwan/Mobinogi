@@ -17,6 +17,8 @@ public class MissionButtonUI : MonoBehaviour
     {
         slidingHighlight.SetActive(!slidingHighlight.activeSelf);
         PlayerController.Instance.autoMode = slidingHighlight.activeSelf;
+        if (PlayerController.Instance.autoMode)
+            PlayerController.Instance.stateMachine.SetState(PlayerController.Instance.MoveState);
     }
 
     // Update is called once per frame

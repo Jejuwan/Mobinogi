@@ -41,11 +41,16 @@ public class PlayerController : ChrController
         attackDist = 1.5f;
         detectDist = 10f;
 
+        stateMachine.AddTransition(IdleState, MoveState, () =>
+        {
+
+              return InputManager.instance.IsMoving;
+
+        });
         stateMachine.AddTransition(IdleState, AttackState, () =>
         {
             var closeMonster = GetClosestMonster();
             if (!closeMonster) return false;
-
 
             float dist = Vector3.Distance(transform.position, closeMonster.transform.position);
 
@@ -53,28 +58,26 @@ public class PlayerController : ChrController
 
             return dist < attackDist;
         });
-
-        stateMachine.AddTransition(IdleState, MoveState, () =>
-        {
-            if (!autoMode)
-                return InputManager.instance.IsMoving;
-            else
-                return true;
-        });
         stateMachine.AddTransition(MoveState, IdleState, () =>
         {
             if (!autoMode)
                 return !InputManager.instance.IsMoving;
             else
             {
-                var closeMonster = GetClosestMonster();
-                if (!closeMonster) return false;
+                if (!InputManager.instance.IsMoving)
+                {
+                    {
+                        var closeMonster = GetClosestMonster();
+                        if (!closeMonster) return false;
 
-                float dist = Vector3.Distance(transform.position, closeMonster.transform.position);
+                        float dist = Vector3.Distance(transform.position, closeMonster.transform.position);
 
-                nearOpponent = dist < detectDist;
+                        nearOpponent = dist < detectDist;
 
-                return dist < attackDist;
+                        return dist < attackDist;
+                    }
+                }
+                return false;
             }
         });
 
@@ -88,6 +91,7 @@ public class PlayerController : ChrController
     protected override void Update()
     {
         base.Update();
+        //Debug.Log(stateMachine.currentState);
     }
 
     public MonsterController GetClosestMonster()
@@ -114,44 +118,56 @@ public class PlayerController : ChrController
     {
         if (!autoMode)
         {
-            Vector3 camForward = CameraManager.instance.mainCam.transform.forward;
-            Vector3 camRight = CameraManager.instance.mainCam.transform.right;
-            camForward.y = 0f;
-            camRight.y = 0f;
-            camForward.Normalize();
-            camRight.Normalize();
-
-            Vector3 moveVector = camForward * InputManager.instance.MoveInput.y + camRight * InputManager.instance.MoveInput.x;
-            agent.SetDestination(transform.position + moveVector);
-
-            Vector3 rotateVector = moveVector;
-            rotateVector.y = 0f;
-
-            if (InputManager.instance.MoveInput.sqrMagnitude != 0)
-            {
-                transform.rotation = Quaternion.LookRotation(rotateVector);
-            }
+            ForceMove();
         }
         else
         {
-            if (TargetMonster != null)
-            { 
-                agent.SetDestination(TargetMonster.transform.position);
-                Vector3 next = agent.nextPosition;
-                Vector3 dir = next - transform.position;
-            }
-
-            if (!agent.pathPending && agent.remainingDistance > 0.1f)
+            if(InputManager.instance.IsMoving)
             {
-                Vector3 dir = agent.steeringTarget - transform.position;
-                dir.y = 0f; // Y축 고정 (수직 기울어짐 방지)
-
-                if (dir.sqrMagnitude > 0.001f)
+                ForceMove();
+            }
+            else
+            {
+                if (TargetMonster != null)
                 {
-                    Quaternion targetRotation = Quaternion.LookRotation(dir);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+                    agent.SetDestination(TargetMonster.transform.position);
+                    Vector3 next = agent.nextPosition;
+                    Vector3 dir = next - transform.position;
+                }
+
+                if (!agent.pathPending && agent.remainingDistance > 0.1f)
+                {
+                    Vector3 dir = agent.steeringTarget - transform.position;
+                    dir.y = 0f; // Y축 고정 (수직 기울어짐 방지)
+
+                    if (dir.sqrMagnitude > 0.001f)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(dir);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+                    }
                 }
             }
+        }
+    }
+
+    void ForceMove()
+    {
+        Vector3 camForward = CameraManager.instance.mainCam.transform.forward;
+        Vector3 camRight = CameraManager.instance.mainCam.transform.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 moveVector = camForward * InputManager.instance.MoveInput.y + camRight * InputManager.instance.MoveInput.x;
+        agent.SetDestination(transform.position + moveVector);
+
+        Vector3 rotateVector = moveVector;
+        rotateVector.y = 0f;
+
+        if (InputManager.instance.MoveInput.sqrMagnitude != 0)
+        {
+            transform.rotation = Quaternion.LookRotation(rotateVector);
         }
     }
 
