@@ -11,7 +11,7 @@ public class GhostController : MonsterController
     [SerializeField] public ParticleSystem teleportEffectPrefab;
     public ParticleSystem teleportEffect;
     public List<AttackPattern> attackPatterns;
-
+    
     [SerializeField] public Transform[] teleportPos;
     public int teleportIdx = 0;
 
@@ -19,6 +19,7 @@ public class GhostController : MonsterController
     protected override void Awake()
     {
         base.Awake();
+
         IdleState = new GhostIdleState(this, stateMachine);
         MoveState = new GhostMoveState(this, stateMachine);
         AttackState = new GhostAttackState(this, stateMachine);

@@ -90,5 +90,9 @@ public class MonsterController : ChrController
         }
 
         material.SetFloat("_Dissolve", 1f);
+        if(this is GhostController)
+        {
+            CutSceneTrigger.instance.StageClear();
+        }
     }
 }
