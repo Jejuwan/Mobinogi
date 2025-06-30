@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class GhostController : MonsterController
@@ -6,7 +8,12 @@ public class GhostController : MonsterController
     [SerializeField] public GameObject Meteor;
     [SerializeField] public GameObject MiniMeteor;
     [SerializeField] public GameObject Crystal;
+    [SerializeField] public ParticleSystem teleportEffectPrefab;
+    public ParticleSystem teleportEffect;
     public List<AttackPattern> attackPatterns;
+
+    [SerializeField] public Transform[] teleportPos;
+    public int teleportIdx = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Awake()
@@ -64,4 +71,18 @@ public class GhostController : MonsterController
 
         Instantiate(Crystal,transform.position, quat);
     }
+
+    void OnTeleport()
+    {
+        StartCoroutine(TeleportAndWait());
+    }
+
+    IEnumerator TeleportAndWait()
+    {
+        teleportEffect = EffectManager.Instance.ShowEffect(teleportEffectPrefab, teleportEffect, transform.position, Quaternion.identity, 1f);
+        yield return new WaitWhile(() => teleportEffect.isPlaying);
+        teleportIdx = teleportIdx == 0 ? 1 : 0;
+        transform.position = teleportPos[teleportIdx].position;
+    }
+
 }
